@@ -1,13 +1,17 @@
 #pragma once
-#include "../Object/Object.h"
+#include "../Object/MoveObject.h"
 
 
-class ItemBase : public GameObject
+class ItemBase : public MoveObject
 {
 public:
 
-	//égÇ¡ÇΩéûÇÃä÷êî
-	virtual void use(Vec2f _pos, Direction _direction) {};
+	ItemBase() :
+		MoveObject(Vec2f::Zero(), Vec2f::Zero()) {}
+	ItemBase(Vec2f _pos, Vec2f _size) :
+		MoveObject(_pos, _size) {}
+	~ItemBase() = default;
+
 	virtual	void update() {};
 	virtual	void draw() {};
 

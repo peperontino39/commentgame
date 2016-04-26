@@ -2,24 +2,18 @@
 
 
 Bomb::Bomb() :
-	pos(Vec2f::Zero()),
-	size(Vec2f::Zero())
+	ItemBase()
 {
 
 }
 
 Bomb::Bomb(Vec2f _pos, Vec2f _size) :
-	pos(_pos),
-	size(_size)
+	ItemBase(Vec2f::Zero(), Vec2f::Zero())
 {
 
 }
 
 Bomb::~Bomb() {
-
-}
-
-void Bomb::use(Vec2f _pos, Direction _direction) {
 
 }
 

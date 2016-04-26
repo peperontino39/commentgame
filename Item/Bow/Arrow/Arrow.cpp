@@ -1,15 +1,19 @@
 #include "Arrow.h"
 
 
-Arrow::Arrow() {
+Arrow::Arrow() :
+	ItemBase()
+{
+
+}
+
+Arrow::Arrow(Vec2f _pos, Vec2f _size) :
+	ItemBase(_pos, _size)
+{
 
 }
 
 Arrow::~Arrow() {
-
-}
-
-void Arrow::use(Vec2f _pos, Direction _direction) {
 
 }
 

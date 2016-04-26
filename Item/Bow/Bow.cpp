@@ -1,7 +1,15 @@
 #include "Bow.h"
 
 
-Bow::Bow() {
+Bow::Bow() :
+	ItemBase()
+{
+
+}
+
+Bow::Bow(Vec2f _pos, Vec2f _size) :
+	ItemBase(_pos, _size)
+{
 
 }
 
