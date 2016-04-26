@@ -1,8 +1,8 @@
 #pragma once
-#include "../CharacterBase/CharacterBase.h"
+#include "../Object/MoveObject.h"
 #include "../Share/Property/PropertySystem.h"
 
-class Player : public CharacterBase
+class Player : public MoveObject
 {
 public:
 	Player(Vec2f _pos, Vec2f _size);

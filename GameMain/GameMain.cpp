@@ -4,6 +4,7 @@
 GameMain::GameMain()
 {
 	player = new Player(Vec2f::Zero(), Vec2f(100, 100));
+	map.Load(1);
 }
 
 void GameMain::update()

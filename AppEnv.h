@@ -10,9 +10,9 @@ enum Window {
 	HEIGHT = 1080
 };
 
-enum Direction {
-	aLEFT,
-	aRIGHT
+enum class Direction {
+	LEFT,
+	RIGHT
 };
 
 
