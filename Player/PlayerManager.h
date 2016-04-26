@@ -1,7 +1,9 @@
 #pragma once
 #include "Player.h"
+#include <assert.h>
 
-#define GetPlayer PlayerManager::get()
+#define P_Manager PlayerManager::get()
+#define GetPlayer P_Manager.getPlayer()
 
 class PlayerManager {
 public:
