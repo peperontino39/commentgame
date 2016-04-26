@@ -1,7 +1,7 @@
 #pragma once
-#include "../Object/Object.h"
+#include "../Object/MoveObject.h"
 
-class Enemy : public GameObject
+class Enemy : public MoveObject
 {
 public:
 	Enemy();

@@ -1,8 +1,8 @@
 #pragma once
-#include "../Object/Object.h"
+#include "../Object/MoveObject.h"
+#include "Property/PropertySystem.h"
 
-
-class Player : public GameObject
+class Player : public MoveObject
 {
 public:
 	Player(Vec2f _pos, Vec2f _size);
@@ -11,6 +11,9 @@ public:
 	void update() override;
 
 private:
+
+	
+
 
 };
 
