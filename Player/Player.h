@@ -10,7 +10,14 @@ public:
 	void draw() override;
 	void update() override;
 
+	void setPos(Vec2f _pos);
+	void setSize(Vec2f _size);
+	Vec2f getPos();
+	Vec2f getSize();
+
 private:
+
+	void move();
 
 };
 
