@@ -1,6 +1,8 @@
 #pragma once
 #include "../SceneBase/CreateScene.h"
 #include "../StageSelect/StageSelect.h"
+#include "../easing.h"
+#include <codecvt>
 
 class Title : public SceneBase
 {
@@ -10,6 +12,10 @@ public:
 	void draw() override;
 	void shift() override;
 
-private:
+	float x = 0;
+	bool is_in = true;
+	
 
+protected:
+	Font titleFont;
 };

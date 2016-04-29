@@ -2,7 +2,8 @@
 #include "AppEnv.h"
 
 int main() {
-	
+
+	env;
 	SceneManager scenemanager;
 
 	while (env.isOpen()) {
