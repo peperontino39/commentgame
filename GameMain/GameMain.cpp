@@ -3,13 +3,14 @@
 
 GameMain::GameMain()
 {
-	player = new Player(Vec2f::Zero(), Vec2f(100, 100));
+	P_Manager.createPlayer("res/stage/stage1/Player.txt");
 	map.Load(1);
 }
 
 void GameMain::update()
 {
-	player->update();
+	camera_pos = GetPlayer->getPos();
+	GetPlayer->update();
 	map.update();
 	ui.update();
 	enemyholder.update();
@@ -18,12 +19,15 @@ void GameMain::update()
 
 void GameMain::draw()
 {
-	player->draw();
+	glPushMatrix();
+	glTranslated(-camera_pos.x(), -camera_pos.y(), 0);
 	map.draw();
 	ui.draw();
 	enemyholder.draw();
 	comment.draw();
 	drawFillBox(0, 0, 100, 100, Color::blue);
+	GetPlayer->draw();
+	glPopMatrix();
 }
 
 void GameMain::shift()

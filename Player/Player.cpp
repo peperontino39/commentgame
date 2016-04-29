@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(Vec2f _pos, Vec2f _size) : 
-	MoveObject(_pos, _size)
+	CharacterBase(_pos, _size)
 {
 }
 
@@ -12,6 +12,7 @@ Player::~Player()
 void Player::update()
 {
 	move();
+	fall();
 }
 
 void Player::draw()
