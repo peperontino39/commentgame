@@ -3,7 +3,7 @@
 NormalBlock::NormalBlock(Vec2f _pos,Vec2f _size) :
 	BlockBase(_pos, _size)
 {
-
+	is_Object = true;
 }
 
 NormalBlock::~NormalBlock()
@@ -13,6 +13,7 @@ NormalBlock::~NormalBlock()
 
 void NormalBlock::update()
 {
+
 }
 
 void NormalBlock::draw()

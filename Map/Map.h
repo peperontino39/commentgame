@@ -13,7 +13,9 @@ public:
 	void Load(int);
 	
 private:
-	
+	Vec2i sell(Vec2f);
+
+	Vec2f block_size;
 	std::vector<std::vector<BlockBase*>> block;
 };
 
