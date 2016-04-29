@@ -17,25 +17,17 @@ float getAnimationCutPositionX(
 Bomb::Bomb() :
 	ItemBase(),
 	explosion_count(600),
-	animation_count(0),
 	is_countdown(false),
-	is_explosion(false),
-	cut_pos(Vec2f::Zero()),
-	cut_size(Vec2f(0.0f, 0.0f)),
-	color(Vec3f(0.0f, 0.0f, 0.0f))
+	is_explosion(false)
 {
 
 }
 
-Bomb::Bomb(Vec2f _pos, Vec2f _size) :
-	ItemBase(Vec2f::Zero(), Vec2f::Zero()),
+Bomb::Bomb(Vec2f _pos, Vec2f _size, Vec2f _vec) :
+	ItemBase(_pos, _size, _vec),
 	explosion_count(600),
-	animation_count(0),
 	is_countdown(false),
-	is_explosion(false),
-	cut_pos(Vec2f(0.0f, 0.0f)),
-	cut_size(Vec2f(0.0f, 0.0f)),
-	color(Vec3f(0.0f, 0.0f, 0.0f))
+	is_explosion(false)
 {
 
 }
@@ -46,13 +38,14 @@ Bomb::~Bomb() {
 
 void Bomb::update() {
 
+	move();
 	countDown();
 	animation();
 }
 
 void Bomb::draw() {
 
-	//drawTextureBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), cut_position.x(), cut_position.y(), cut_size.x(), cut_size.y(), texture, Color(color.x(), color.y(), color.z()));
+	//drawTextureBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), cut_pos.x(), cut_pos.y(), cut_size.x(), cut_size.y(), texture, Color(color.x(), color.y(), color.z()));
 
 	/*‰¼’u‚«*/
 	drawFillBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), Color::blue);
@@ -62,6 +55,36 @@ void Bomb::draw() {
 
 
 
+
+void Bomb::move() {
+
+	if (is_countdown != true)
+		return;
+
+	if (vec_.x() < 0.0f) {
+
+		vec_.x() += 1.0f;
+
+		if (vec_.x() > 0.0f)
+			vec_.x() = 0.0f;
+	}
+
+	if (vec_.x() > 0.0f) {
+
+		vec_.x() += -1.0f;
+
+		if (vec_.x() < 0.0f)
+			vec_.x() = 0.0f;
+	}
+
+	vec_.y() += -1.0f;
+
+	if (vec_.y() < -10.0f)
+		vec_.y() = -10.0f;
+
+
+	pos += vec_;
+}
 
 void Bomb::countDown() {
 
@@ -76,8 +99,11 @@ void Bomb::countDown() {
 
 void Bomb::animation() {
 
-	if (is_explosion != true)
+	if (is_explosion != true) {
+
+		animation_count = 0;
 		return;
+	}
 
 	cut_pos.x() = getAnimationCutPositionX(cut_size, animation_count, 20, 6);
 }
