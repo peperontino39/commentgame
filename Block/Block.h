@@ -3,6 +3,13 @@
 #include "../AppEnv.h"
 #include "../Object/MoveObject.h"
 
+enum BlockType {
+	NON,
+	NORMAL,
+};
+
+
+
 class BlockBase : public MoveObject
 {
 public:
@@ -11,7 +18,15 @@ public:
 	{
 
 	}
-	void update() override;
-	void draw() override;
+	virtual Vec2f collision(ObjectBase&, Vec2f vec);
+	virtual void update() override;
+	virtual void draw() override;
+	Vec2f vec;
+	bool up_block;
+	bool down_block;
+	bool left_block;
+	bool rightblock;
+
+	Vec2f getPos();
 
 };
