@@ -9,7 +9,7 @@ public:
 	~Enemy();
 	void update() override;
 	void draw() override;
-
+	
 private:
 
 };

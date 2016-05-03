@@ -19,6 +19,7 @@ Vec2f BlockBase::collision(Vec2f _pos,Vec2f _size, Vec2f _vec)
 			}
 		}
 	}
+	
 	return _vec;
 }
 

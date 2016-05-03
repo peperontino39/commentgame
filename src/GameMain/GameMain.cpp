@@ -10,6 +10,13 @@ GameMain::GameMain()
 void GameMain::update()
 {
 	camera_pos = GetPlayer->getPos();
+	
+	GetPlayer->vec =  map.collision(GetPlayer->getPos(), GetPlayer->getSize(), GetPlayer->vec);
+	
+	
+	
+	
+	
 	GetPlayer->update();
 	map.update();
 	ui.update();

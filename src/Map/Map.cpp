@@ -86,6 +86,11 @@ void Map::Load(int _stage_num)
 
 }
 
+Vec2f Map::collision(Vec2f, Vec2f, Vec2f)
+{
+	return Vec2f::Zero();
+}
+
 Vec2i Map::sell(Vec2f _pos)
 {
 	return Vec2i(_pos.x()/ block_size.x(),-_pos.y()/block_size.y());

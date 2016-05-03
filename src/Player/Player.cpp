@@ -17,6 +17,7 @@ void Player::update()
 
 void Player::draw()
 {
+	
 	drawBox(pos.x(), pos.y(), size.x(), size.y(), 5, Color::white);
 }
 

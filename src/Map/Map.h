@@ -11,6 +11,7 @@ public:
 	void update();
 	void draw();
 	void Load(int);
+	Vec2f collision(Vec2f, Vec2f, Vec2f);
 	
 private:
 	Vec2i sell(Vec2f);
