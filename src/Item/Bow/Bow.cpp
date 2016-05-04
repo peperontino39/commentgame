@@ -3,6 +3,7 @@
 
 Bow::Bow() :
 	ItemBase(),
+	max_arrow_num(10),
 	max_arrow_vec(10.0f),
 	arrow_vec(Vec2f::Zero()),
 	rad(0.0f)
@@ -12,6 +13,7 @@ Bow::Bow() :
 
 Bow::Bow(Vec2f _pos, Vec2f _size) :
 	ItemBase(_pos, _size, Vec2f::Zero()),
+	max_arrow_num(10),
 	max_arrow_vec(10.0f),
 	arrow_vec(Vec2f::Zero()),
 	rad(0.0f)
@@ -50,6 +52,9 @@ void Bow::draw() {
 
 void Bow::drawTheBow() {
 
+	if (is_player_have != true)
+		return;
+
 	if (!env.isPressKey(GLFW_KEY_ENTER))
 		return;
 
@@ -58,6 +63,9 @@ void Bow::drawTheBow() {
 
 void Bow::shootTheBow() {
 
+	if (is_player_have != true)
+		return;
+
 	if (!env.isPullKey(GLFW_KEY_ENTER))
 		return;
 
@@ -65,12 +73,20 @@ void Bow::shootTheBow() {
 	arrow_vec.y() = max_arrow_vec * std::sin(rad);
 
 	arrows.emplace_back(Arrow(pos, size, arrow_vec));
+
+	if (arrows.size() <= max_arrow_num)
+		return;
+
+	std::list<Arrow>::iterator first_arrow = arrows.begin();
+	arrows.erase(first_arrow);
 }
 
 void Bow::changeAngle() {
 
+	//è„å¿90ìxÇ‹Ç≈
 	if (env.isPressKey(GLFW_KEY_UP) && rad < 0.5f)
 		rad += 0.05f;
+	//â∫å¿0ìxÇ‹Ç≈
 	else if (env.isPressKey(GLFW_KEY_UP) && rad > 0.0f)
 		rad -= 0.05f;
 

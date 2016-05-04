@@ -16,4 +16,6 @@ private:
 
 	std::list<ItemBase*> item_list;
 
+	void update();
+	void draw();
 };
