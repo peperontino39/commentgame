@@ -4,7 +4,7 @@
 #include "../EnemyHolder/EnemyHolder.h"
 #include "../Map/Map.h"
 #include "../Ui/Ui.h"
-#include "../Player/Player.h"
+#include "../Player/PlayerManager.h"
 #include "../AppEnv.h"
 
 class GameMain : public SceneBase
@@ -16,10 +16,10 @@ public:
 	void shift() override;
 
 private:
-	Player* player;
+	
 	Map map;
 	Ui ui;
 	EnemyHolder enemyholder;
 	Comment comment;
-
+	Vec2f camera_pos;
 };

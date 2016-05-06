@@ -11,7 +11,6 @@ public:
 
 	}
 
-
 protected:
 	Vec2f pos;
 	Vec2f size;
