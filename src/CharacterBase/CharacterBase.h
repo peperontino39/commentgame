@@ -9,6 +9,7 @@ public:
 	CharacterBase(Vec2f _pos, Vec2f _size);
 
 	WritableP<float> gravity;
+	WritableP<float> gravity_max;
 
 protected:
 	void fall();

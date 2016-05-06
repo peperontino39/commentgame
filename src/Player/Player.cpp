@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(Vec2f _pos, Vec2f _size) : 
+Player::Player(Vec2f _pos, Vec2f _size) :
 	CharacterBase(_pos, _size)
 {
 }
@@ -17,8 +17,10 @@ void Player::update()
 
 void Player::draw()
 {
-	
-	drawBox(pos.x(), pos.y(), size.x(), size.y(), 5, Color::white);
+	drawBox(pos.x(), pos.y(), size.x(), size.y(), 5, Color::white,
+			0,
+			Vec2f(1, 1),
+			Vec2f(size.x() / 2, size.y() / 2));
 }
 
 void Player::setPos(Vec2f _pos)
