@@ -3,7 +3,8 @@
 
 CharacterBase::CharacterBase(Vec2f _pos, Vec2f _size) :
 	MoveObject(_pos, _size),
-	gravity(gravity_)
+	gravity(gravity_),
+	gravity_max(gravity_max_)
 {
 
 }
