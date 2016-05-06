@@ -16,6 +16,6 @@ protected:
 private:
 
 	float gravity_ = 0.3f;
-	float gravity_max_ = 1;
+	float gravity_max_ = 20;
 
 };
