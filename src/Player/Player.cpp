@@ -13,6 +13,7 @@ void Player::update()
 {
 	move();
 	fall();
+	vector();
 }
 
 void Player::draw()
@@ -46,6 +47,7 @@ Vec2f Player::getSize()
 void Player::move()
 {
 	float speed = 10;
+	vec_ = Vec2f::Zero();
 	if (env.isPressKey('A'))
 	{
 		vec_.x() = -speed;
@@ -54,6 +56,5 @@ void Player::move()
 	{
 		vec_.x() = speed;
 	}
-	pos += vec_;
 }
 
