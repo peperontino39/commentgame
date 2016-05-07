@@ -47,7 +47,7 @@ Vec2f Player::getSize()
 void Player::move()
 {
 	float speed = 10;
-	vec_ = Vec2f::Zero();
+	vec_.x() = 0.0f;
 	if (env.isPressKey('A'))
 	{
 		vec_.x() = -speed;
