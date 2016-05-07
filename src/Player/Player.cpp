@@ -45,13 +45,15 @@ Vec2f Player::getSize()
 
 void Player::move()
 {
+	float speed = 10;
 	if (env.isPressKey('A'))
 	{
-		pos.x() -= 5;
+		vec_.x() = -speed;
 	}
 	if (env.isPressKey('D'))
 	{
-		pos.x() += 5;
+		vec_.x() = speed;
 	}
+	pos += vec_;
 }
 

@@ -11,9 +11,9 @@ CharacterBase::CharacterBase(Vec2f _pos, Vec2f _size) :
 
 void CharacterBase::fall()
 {
-	pos.y() += vec_.y();
 	vec_.y() -= gravity_;
 	vec_.y() = std::max(vec_.y(), -gravity_max_);
+	pos.y() += vec_.y();
 }
 
 
