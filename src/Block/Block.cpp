@@ -11,13 +11,30 @@ bool is_hit(Vec2f _pos, Vec2f _size, Vec2f floor_pos, Vec2f floor_size) {
 Vec2f BlockBase::collision(Vec2f _pos,Vec2f _size, Vec2f _vec)
 {
 	Vec2f _collision;
-	if (is_hit(pos, size, _pos, size)) {
-		if (_vec.y() < 0) {
-			if (_pos.y() > pos.y() + size.y() / 2 + _size.y() / 2-20) {
-				return  _vec -
-					Vec2f(0,pos.y() + size.y() / 2 + _size.y() / 2 - _pos.y());
+	if (is_hit(pos, size, _pos, _size)) {
+		//è„
+		if (_vec.y() < 0.01) {
+			if (up_block) {
+				if (_pos.y() > (pos.y() + size.y() / 2 + _size.y() / 2) - 30) {
+					return Vec2f(0, (pos.y() + size.y() / 2 + _size.y() / 2) - _pos.y());
+				}
 			}
 		}
+		//ç∂
+			std::cout << _vec << std::endl;
+		if (_vec.x() > 0) {
+			if (_pos.x() < pos.x()) {
+				return Vec2f(-(_pos.x() + _size.x() / 2) + (pos.x() - size.x() / 2), 0);
+			}
+		}
+		//âE
+		if (_vec.x() < 0) {
+			if (_pos.x() > pos.x()) {
+				return Vec2f((_pos.x() - _size.x() / 2) - (pos.x() + size.x() / 2), 0);
+			}
+		}
+
+
 	}
 	
 	return _vec;

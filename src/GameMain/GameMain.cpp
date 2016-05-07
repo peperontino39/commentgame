@@ -11,13 +11,14 @@ void GameMain::update()
 {
 	camera_pos = GetPlayer->getPos();
 	
-	GetPlayer->vec =  map.collision(GetPlayer->getPos(), GetPlayer->getSize(), GetPlayer->vec);
+	
 	
 	
 	
 	
 	
 	GetPlayer->update();
+	GetPlayer->addpos(map.collision(GetPlayer->getPos(), GetPlayer->getSize(), GetPlayer->vec));
 	map.update();
 	ui.update();
 	enemyholder.update();
@@ -32,7 +33,6 @@ void GameMain::draw()
 	ui.draw();
 	enemyholder.draw();
 	comment.draw();
-	drawFillBox(0, 0, 100, 100, Color::blue);
 	GetPlayer->draw();
 	glPopMatrix();
 }

@@ -17,6 +17,6 @@ private:
 	Vec2i sell(Vec2f);
 
 	Vec2f block_size;
-	std::vector<std::vector<BlockBase*>> block;
+	std::vector<std::vector<std::shared_ptr<BlockBase>>> block;
 };
 
