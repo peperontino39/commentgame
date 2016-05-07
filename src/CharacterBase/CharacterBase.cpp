@@ -13,7 +13,11 @@ void CharacterBase::fall()
 {
 	vec_.y() -= gravity_;
 	vec_.y() = std::max(vec_.y(), -gravity_max_);
-	pos.y() += vec_.y();
+}
+
+void CharacterBase::vector()
+{
+	pos += vec_;
 }
 
 

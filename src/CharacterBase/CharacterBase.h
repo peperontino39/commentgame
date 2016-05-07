@@ -13,6 +13,7 @@ public:
 
 protected:
 	void fall();
+	void vector();
 private:
 
 	float gravity_ = 0.3f;
