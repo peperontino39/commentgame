@@ -1,0 +1,45 @@
+#include "GameMain.h"
+#include "../Title/Title.h"
+
+GameMain::GameMain()
+{
+	P_Manager.createPlayer("res/stage/stage1/Player.txt");
+	map.Load(1);
+}
+
+void GameMain::update()
+{
+	camera_pos = GetPlayer->getPos();
+	
+	
+	
+	
+	
+	
+	
+	GetPlayer->update();
+	GetPlayer->addpos(map.collision(GetPlayer->getPos(), GetPlayer->getSize(), GetPlayer->vec));
+	map.update();
+	ui.update();
+	enemyholder.update();
+	comment.update();
+}
+
+void GameMain::draw()
+{
+	glPushMatrix();
+	glTranslated(-camera_pos.x(), -camera_pos.y(), 0);
+	map.draw();
+	ui.draw();
+	enemyholder.draw();
+	comment.draw();
+	GetPlayer->draw();
+	glPopMatrix();
+}
+
+void GameMain::shift()
+{
+	if (env.isPushButton(Mouse::LEFT)) {
+		Scene::create<Title>(new Title());
+	}
+}
