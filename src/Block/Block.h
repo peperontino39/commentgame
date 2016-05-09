@@ -15,7 +15,10 @@ public:
 	BlockBase(Vec2f _pos, Vec2f _size) :
 		MoveObject(_pos, _size) 
 	{
-		is_Object = false;
+		up_block = true;
+		down_block = true;
+		left_block = true;
+		right_block = true;
 	}
 	virtual Vec2f collision(Vec2f,Vec2f, Vec2f);
 	virtual void update() override;
@@ -24,8 +27,8 @@ public:
 	bool up_block;
 	bool down_block;
 	bool left_block;
-	bool rightblock;
-	bool is_Object;
+	bool right_block;
+	virtual bool is_Object() = 0;
 	Vec2f getPos();
 
 };

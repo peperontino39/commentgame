@@ -8,7 +8,7 @@ public:
 	~NormalBlock();
 	void update() override;
 	void draw() override;
-
+	bool is_Object() override;
 private:
 
 };
