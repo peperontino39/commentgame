@@ -25,6 +25,14 @@ Bow::~Bow() {
 
 }
 
+void Bow::putDownTheBow(Vec2f pos) {
+
+	this->pos = pos;
+	is_player_have = false;
+	is_draw = true;
+}
+
+
 void Bow::update() {
 
 	drawTheBow();

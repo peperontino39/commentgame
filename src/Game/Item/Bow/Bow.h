@@ -11,6 +11,8 @@ public:
 	Bow(Vec2f _pos, Vec2f _size);
 	~Bow();
 
+	void putDownTheBow(Vec2f pos);
+
 	void update() override;
 	void draw() override;
 

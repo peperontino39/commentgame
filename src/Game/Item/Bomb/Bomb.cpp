@@ -22,7 +22,6 @@ Bomb::Bomb() :
 	ItemBase(),
 	explosion_count(600),
 	animation_count(0),
-	is_countdown(false),
 	is_explosion(false),
 	cut_pos(Vec2f::Zero()),
 	cut_size(Vec2f(0.0f, 0.0f)),
@@ -35,7 +34,6 @@ Bomb::Bomb(Vec2f _pos, Vec2f _size, Vec2f vec) :
 	ItemBase(ItemID::BOMB, _pos, _size, vec),
 	explosion_count(600),
 	animation_count(0),
-	is_countdown(false),
 	is_explosion(false),
 	cut_pos(Vec2f(0.0f, 0.0f)),
 	cut_size(Vec2f(256.0f, 256.0f)),
@@ -52,6 +50,7 @@ void Bomb::update() {
 
 	countDown();
 	animation();
+	gravity();
 }
 
 void Bomb::draw() {
@@ -84,4 +83,22 @@ void Bomb::animation() {
 		return;
 
 	cut_pos = getAnimationCutPosition(cut_size, animation_count, Vec2i(20, 120), Vec2i(6, 2));
+
+	--explosion_end_count;
+
+	if (explosion_end_count <= 0)
+		is_end_ = true;
+}
+
+void Bomb::gravity() {
+
+	vec_.x() -= 0.1f;
+	vec_.y() -= 0.3f;
+
+	if (vec_.x() >= -0.1f && vec_.x() < 0.1f)
+		vec_.x() = 0.0f;
+	if (vec_.y() >= -3.0f)
+		vec_.y() = -3.0f;
+
+	pos = vec;
 }

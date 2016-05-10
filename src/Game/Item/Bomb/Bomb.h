@@ -17,11 +17,12 @@ private:
 
 	void countDown();
 	void animation();
+	void gravity();
 
 
 	int explosion_count;
+	int explosion_end_count;
 	int animation_count;
-	bool is_countdown;
 	bool is_explosion;
 
 	Vec2f cut_pos;
