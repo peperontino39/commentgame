@@ -39,6 +39,8 @@ private:
                const FlowString::Type type = FlowString::Type::MIDDLE,
                const Color& col = Color::white);
 public:
+    void regist();
+public:
     void drawFlow(std::vector<Font>& font);
     void drawStop(std::vector<Font>& font);
     void update();

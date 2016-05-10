@@ -23,12 +23,17 @@ public:
 
 std::shared_ptr<CommentTask::_m_CommentTask> CommentTask::member = std::make_shared<CommentTask::_m_CommentTask>();
 
-void CommentTask::setup()
+void CommentTask::fontSizeUpdate()
 {
-    member->fonts = { Font("res/Font/meiryo.ttc"), Font("res/Font/meiryo.ttc"), Font("res/Font/meiryo.ttc") };
     member->fonts.at(0).size((CommentWindow::size.y() / CommentOption::lines) * 0.5f);
     member->fonts.at(1).size((CommentWindow::size.y() / CommentOption::lines) * 0.8f);
     member->fonts.at(2).size((CommentWindow::size.y() / CommentOption::lines) * 1.0f);
+}
+
+void CommentTask::setup()
+{
+    member->fonts = { Font("res/Font/meiryo.ttc"), Font("res/Font/meiryo.ttc"), Font("res/Font/meiryo.ttc") };
+    fontSizeUpdate();
 
     member->comments.push_back(FlowString("wwwwwwwwwwwwwwwwww", FlowString::Size::SMALL));
     member->comments.push_back(FlowString("↓草", FlowString::Size::BIG));
@@ -96,11 +101,25 @@ void CommentTask::draw()    //　コメントの描画は上コメ→下コメ→中央コメの順でし
 
 void CommentTask::update()
 {
+    //  コメントウィンドウの原点やサイズが変更されたら呼ばれる。
+    if (CommentWindow::isChange())
+    {
+        //  自分のクラスのfontをサイズ変更
+        fontSizeUpdate();
+        //  コメント登録用のスタックを削除
+        CommentStack::clear();
+        //  コメントを登録するときに、y軸の高さを決定しているため、コメントを再登録して完了
+        for (auto& obj : member->comments) obj.regist();
+        //  もう一度コメント登録用のスタックを削除
+        CommentStack::clear();
+    }
+
+    CommentWindow::update();
+    CommentOption::update();
+
     CommentStack::Access(FlowString::Type::TOP).update();
     CommentStack::Access(FlowString::Type::MIDDLE).update();
     CommentStack::Access(FlowString::Type::BOTTOM).update();
-
-    CommentOption::update();
 
     for (auto itr = member->comments.begin(); itr != member->comments.end();)
     {

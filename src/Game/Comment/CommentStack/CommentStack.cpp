@@ -1,9 +1,11 @@
 #include "CommentStack.h"
 #include "../CommentOption/CommentOption.h"
+#include "../../../lib/random.hpp"
+#include <chrono>
 
 struct CommentStack::_m_CommentStack
 {
-    std::vector<std::pair<bool, size_t>> stack = std::vector<std::pair<bool, size_t>>(10);
+    std::vector<std::pair<bool, size_t>> stack = std::vector<std::pair<bool, size_t>>(10, {false, 0});
 };
 
 CommentStack::CommentStack()
@@ -57,10 +59,12 @@ size_t CommentStack::interrupt()
             break;
         }
     }
-    if (allMin) 
+    if (allMin)
     {
-        CommentOption::frameCounter += 1;
+        Random rander;
+        rander.setSeed(std::chrono::system_clock::now().time_since_epoch().count());
         member->stack.at(num).second = CommentOption::frameCounter;
+        return rander(member->stack.size());
     }
     else
     {

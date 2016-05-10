@@ -6,6 +6,9 @@
 Vec2f CommentWindow::pos;
 Vec2f CommentWindow::size;
 
+Vec2f CommentWindow::pPos;
+Vec2f CommentWindow::pSize;
+
 static struct _Setup_CommentWindow
 {
     _Setup_CommentWindow()
@@ -23,6 +26,7 @@ static struct _Setup_CommentWindow
 
             CommentWindow::pos = Vec2f(pos_x, pos_y);
             CommentWindow::size = Vec2f(size_x, size_y);
+            CommentWindow::update();
 
             input.close();
         }
@@ -32,3 +36,14 @@ static struct _Setup_CommentWindow
         }
     }
 }_init;
+
+bool CommentWindow::isChange()
+{
+    return CommentWindow::pos != CommentWindow::pPos || CommentWindow::size != CommentWindow::pSize;
+}
+
+void CommentWindow::update()
+{
+    CommentWindow::pPos = CommentWindow::pos;
+    CommentWindow::pSize = CommentWindow::size;
+}

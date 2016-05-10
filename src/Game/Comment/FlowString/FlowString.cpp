@@ -37,6 +37,11 @@ void FlowString::setup(const std::string& comment, const FlowString::Size size, 
     member->col = col;
     member->comment = comment;
 
+    regist();
+}
+
+void FlowString::regist()
+{
     double commentHeight = CommentWindow::size.y() / CommentOption::lines;
     switch (member->type)
     {
@@ -47,7 +52,7 @@ void FlowString::setup(const std::string& comment, const FlowString::Size size, 
         member->pos.y() = CommentWindow::size.y() - commentHeight - (commentHeight * CommentStack::Access(member->type).regist());
         break;
     case FlowString::Type::BOTTOM:
-        member->pos.y() =  + (commentHeight * CommentStack::Access(member->type).regist());
+        member->pos.y() = +(commentHeight * CommentStack::Access(member->type).regist());
         break;
     default:
         break;
