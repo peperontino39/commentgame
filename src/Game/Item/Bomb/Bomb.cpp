@@ -12,6 +12,7 @@ Vec2f getAnimationCutPosition(
 	cut_pos.y() = cut_size.y() *
 		(static_cast<float>((++animation_count / animation_display_time.y()) % animation_cut_num.y()));
 
+	return cut_pos;
 }
 
 
