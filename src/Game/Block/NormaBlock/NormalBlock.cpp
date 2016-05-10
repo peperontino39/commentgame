@@ -55,8 +55,13 @@ Vec2f NormalBlock::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 
 void NormalBlock::draw()
 {
-	
+	drawTextureBox(pos.x() - size.x() / 2,
+		pos.y() - size.y() / 2,
+		size.x(), size.y(), 0, 0,
+		128, 128,
+		Textures::get("whiteblock"));
 }
+
 
 bool NormalBlock::is_Object()
 {

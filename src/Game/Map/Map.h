@@ -9,6 +9,7 @@
 #include "../Block/NormaBlock/Lift/Lift.h"
 #include "../Block/NormaBlock/Switch/Switch.h"
 #include "../Block/BombBlock/BombBlock.h"
+#include "../Block/NormaBlock/MoveBlock/MoveBlock.h"
 
 #include <vector>
 #include "../Taxture/Taxtures.h"

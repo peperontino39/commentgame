@@ -13,6 +13,6 @@ public:
 	virtual void draw() override;
 
 	bool is_Object() override;
+	std::string texture_name;
 private:
-
 };

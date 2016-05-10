@@ -5,7 +5,7 @@
 class Lift : public NormalBlock
 {
 public:
-	Lift(Vec2f, Vec2f,Vec2i);
+	Lift(Vec2f, Vec2f,int,Vec2i);
 	void draw() override;
 	void update() override;
 private:

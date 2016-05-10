@@ -33,10 +33,12 @@ void Map::update()
 			x->update();
 		}
 	}
-	for (auto it : move_block)
+	for (auto& it : move_block)
 	{
 		it->update();
+		
 	}
+
 }
 
 void Map::draw(Vec2f _pos)
@@ -82,6 +84,9 @@ void Map::Load(int _stage_num)
 
 	Vec2f _block_pos;
 	int _block_type;
+	int _floor_size;
+	Vec2i _move = Vec2i::Zero();
+
 	for (int y = 0; y < _width; y++)
 	{
 		std::vector<std::shared_ptr<BlockBase>> _block;
@@ -123,15 +128,25 @@ void Map::Load(int _stage_num)
 						block_size)));
 				break;
 			case RIFUTO:
+				
+				file >> _floor_size >> _move.x() >> _move.y();
+
 				move_block.push_back(std::make_shared<Lift>(
 					Lift(_block_pos,
-						block_size, Vec2i(0, 5))));
+						block_size, _floor_size, _move)));
 				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
 				break;
 			case BOMBLOCK:
 				_block.push_back(std::make_shared<BombBlock>(
 					BombBlock(_block_pos,
 						block_size)));
+				break;
+			case MOVEBLOCK:
+				move_block.push_back(std::make_shared<MoveBlock>(
+					MoveBlock(_block_pos,
+						block_size)));
+				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
+
 				break;
 			default:
 				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));

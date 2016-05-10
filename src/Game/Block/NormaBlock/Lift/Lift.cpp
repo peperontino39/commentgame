@@ -1,11 +1,11 @@
 #include "Lift.h"
 
-Lift::Lift(Vec2f _pos, Vec2f _size, Vec2i _move_sell) :
-	NormalBlock(_pos, _size)
+Lift::Lift(Vec2f _pos, Vec2f _size, int _floor_size, Vec2i _move_sell) :
+	NormalBlock(_pos+ Vec2f(_size.x()/2 * (_floor_size-1),0), Vec2f(_size.x()*_floor_size, _size.y()))
 {
 	move_sell = _move_sell;
 	move_end = false;
-	bigin_pos = _pos;
+	bigin_pos = pos;
 }
 
 void Lift::draw()
@@ -49,7 +49,7 @@ Vec2f Lift::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 		if (_vec.y() < 0) {
 
 			if (_pos.y() > (pos.y() + size.y() / 2 + _size.y() / 2) - 21) {
-				return Vec2f(0, (pos.y() + size.y() / 2 + _size.y() / 2) - _pos.y());
+				return Vec2f(0, (pos.y() + size.y() / 2 + _size.y() / 2) - _pos.y()) - getVec();
 			}
 		}
 		//ç∂
