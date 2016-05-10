@@ -11,9 +11,9 @@ public:
 	WritableP<float> gravity;
 	WritableP<float> gravity_max;
 
+	void vector();
 protected:
 	void fall();
-	void vector();
 private:
 
 	float gravity_ = 0.3f;
