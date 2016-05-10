@@ -12,7 +12,8 @@ enum BlockType {
 	THORN,
 	SWITCH,
 	RIFUTO,
-	BOMB
+	BOMBLOCK
+
 };
 
 

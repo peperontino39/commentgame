@@ -33,6 +33,10 @@ void Map::update()
 			x->update();
 		}
 	}
+	for (auto it : move_block)
+	{
+		it->update();
+	}
 }
 
 void Map::draw(Vec2f _pos)
@@ -47,6 +51,10 @@ void Map::draw(Vec2f _pos)
 		{
 			block[y][x]->draw();
 		}
+	}
+	for (auto it : move_block)
+	{
+		it->draw();
 	}
 }
 
@@ -115,11 +123,12 @@ void Map::Load(int _stage_num)
 						block_size)));
 				break;
 			case RIFUTO:
-				_block.push_back(std::make_shared<Lift>(
+				move_block.push_back(std::make_shared<Lift>(
 					Lift(_block_pos,
 						block_size, Vec2i(0, 5))));
+				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
 				break;
-			case BOMB:
+			case BOMBLOCK:
 				_block.push_back(std::make_shared<BombBlock>(
 					BombBlock(_block_pos,
 						block_size)));
@@ -152,6 +161,13 @@ Vec2f Map::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 			sinking.x() = absmax(sinking.x(), a.x());
 			sinking.y() = absmax(sinking.y(), a.y());
 		}
+	}
+
+	for (auto it: move_block)
+	{
+		a = it->collision(_pos, _size, _vec);
+		sinking.x() = absmax(sinking.x(), a.x());
+		sinking.y() = absmax(sinking.y(), a.y());
 	}
 	return sinking;
 }

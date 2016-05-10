@@ -6,6 +6,9 @@
 #include "../Player/PlayerManager.h"
 #include "../AppEnv.h"
 #include "../Easing/easing.h"
+#include "../Item/ItemManager/ItemManager.h"
+#include "../Comment/Comment.h"
+#include "../Comment/CommentWindow/CommentWindow.h"
 
 class GameMain : public SceneBase
 {
@@ -22,6 +25,8 @@ private:
 	Map map;
 	Ui ui;
 	EnemyHolder enemyholder;
-	
+	ItemManager itemmanager;
+	Comment comment;
+
 	Vec2f camera_pos;
 };

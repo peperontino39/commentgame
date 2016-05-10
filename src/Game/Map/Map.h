@@ -29,6 +29,7 @@ private:
 
 	Vec2f block_size;
 	std::vector<std::vector<std::shared_ptr<BlockBase>>> block;
+	std::vector<std::shared_ptr<BlockBase>> move_block;
 
 	Vec2i sellBigin(Vec2i, Vec2i);
 	Vec2i sellEnd(Vec2i, Vec2i);
