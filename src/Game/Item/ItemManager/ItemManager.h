@@ -10,12 +10,10 @@ public:
 	ItemManager();
 	~ItemManager();
 
-
+	void update();
+	void draw();
 
 private:
 
 	std::list<ItemBase*> item_list;
-
-	void update();
-	void draw();
 };
