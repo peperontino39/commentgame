@@ -1,6 +1,7 @@
 #pragma once
 #include "../Bomb/Bomb.h"
 #include "../Bow/Bow.h"
+#include "../../Taxture/Taxtures.h"
 
 
 class ItemManager

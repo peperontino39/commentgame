@@ -2,9 +2,17 @@
 
 ItemManager::ItemManager() {
 
-	std::string item_file_path = "res/stage/stage10"/* + std::to_string(ステージ番号) + */"/item.txt";
+	std::string item_file_path = "res/stage/stage10/item.txt";
 	std::ifstream item_file(item_file_path);
 	assert(!item_file.fail());
+
+	std::string block_size_file_path = "res/stage/stage10/BlockSize.txt";
+	std::ifstream block_size_file(block_size_file_path);
+	assert(!block_size_file.fail());
+
+	Vec2f block_size;
+	block_size_file >> block_size.x();
+	block_size_file >> block_size.y();
 
 	while (!item_file.eof())
 	{
@@ -18,11 +26,11 @@ ItemManager::ItemManager() {
 
 			[&]() {
 
-			item_list.emplace_back(new Bomb(pos, Vec2f(100, 100), Vec2f::Zero()));
+			item_list.emplace_back(new Bomb(pos, block_size, Vec2f::Zero()));
 		},
 			[&]() {
 
-			item_list.emplace_back(new Bow(pos, Vec2f(100, 100)));
+			item_list.emplace_back(new Bow(pos, block_size));
 		}
 		};
 

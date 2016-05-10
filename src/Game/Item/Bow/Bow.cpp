@@ -8,7 +8,7 @@ Bow::Bow() :
 	arrow_vec(Vec2f::Zero()),
 	rad(0.0f)
 {
-
+	//Textures::set("bow", "res/Texture/Item/Bow.png");
 }
 
 Bow::Bow(Vec2f _pos, Vec2f _size) :
@@ -18,7 +18,7 @@ Bow::Bow(Vec2f _pos, Vec2f _size) :
 	arrow_vec(Vec2f::Zero()),
 	rad(0.0f)
 {
-
+	//Textures::set("bow", "res/Texture/Item/Bow.png");
 }
 
 Bow::~Bow() {
@@ -36,7 +36,7 @@ void Bow::update() {
 
 void Bow::draw() {
 
-	//drawTextureBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), cut_position.x(), cut_position.y(), cut_size.x(), cut_size.y(), texture, Color(color.x(), color.y(), color.z()));
+	//drawTextureBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), cut_pos.x(), cut_pos.y(), cut_size.x(), cut_size.y(), Textures.get("bow"), Color(color.x(), color.y(), color.z()));
 
 	/*‰¼’u‚«*/
 	//‹|

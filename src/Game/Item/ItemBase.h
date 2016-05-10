@@ -1,5 +1,6 @@
 #pragma once
 #include "../Object/MoveObject.h"
+#include "../Taxture/Taxtures.h"
 
 enum ItemID
 {

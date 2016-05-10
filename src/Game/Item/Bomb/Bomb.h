@@ -1,6 +1,5 @@
 #pragma once
 #include "../ItemBase.h"
-#include "../../Share/Property/PropertySystem.h"
 
 
 class Bomb : public ItemBase
