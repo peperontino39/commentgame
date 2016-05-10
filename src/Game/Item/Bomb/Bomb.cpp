@@ -1,13 +1,16 @@
 #include "Bomb.h"
 
-float getAnimationCutPositionX(
+Vec2f getAnimationCutPosition(
 	Vec2f cut_size,
 	int& animation_count,
-	int animation_display_time,
-	int animation_cut_num) {
-
-	return cut_size.x() *
-		(static_cast<float>((++animation_count / animation_display_time) % animation_cut_num));
+	Vec2i animation_display_time,
+	Vec2i animation_cut_num) {
+	
+	Vec2f cut_pos;
+	cut_pos.x() = cut_size.x() *
+		(static_cast<float>((++animation_count / animation_display_time.x()) % animation_cut_num.x()));
+	cut_pos.y() = cut_size.y() *
+		(static_cast<float>((++animation_count / animation_display_time.y()) % animation_cut_num.y()));
 
 }
 
@@ -28,7 +31,7 @@ Bomb::Bomb() :
 }
 
 Bomb::Bomb(Vec2f _pos, Vec2f _size, Vec2f vec) :
-	ItemBase(Vec2f::Zero(), Vec2f::Zero(), vec),
+	ItemBase(ItemID::BOMB, Vec2f::Zero(), Vec2f::Zero(), vec),
 	explosion_count(600),
 	animation_count(0),
 	is_countdown(false),
@@ -79,5 +82,5 @@ void Bomb::animation() {
 	if (is_explosion != true)
 		return;
 
-	cut_pos.x() = getAnimationCutPositionX(cut_size, animation_count, 20, 6);
+	cut_pos = getAnimationCutPosition(cut_size, animation_count, Vec2i(20, 120), Vec2i(6, 2));
 }

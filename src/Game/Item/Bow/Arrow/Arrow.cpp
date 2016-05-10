@@ -8,7 +8,7 @@ Arrow::Arrow() :
 }
 
 Arrow::Arrow(Vec2f _pos, Vec2f _size, Vec2f _vec) :
-	ItemBase(_pos, _size, _vec)
+	ItemBase(ItemID::ARROW, _pos, _size, _vec)
 {
 
 }

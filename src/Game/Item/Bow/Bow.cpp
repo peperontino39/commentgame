@@ -12,7 +12,7 @@ Bow::Bow() :
 }
 
 Bow::Bow(Vec2f _pos, Vec2f _size) :
-	ItemBase(_pos, _size, Vec2f::Zero()),
+	ItemBase(ItemID::BOW, _pos, _size, Vec2f::Zero()),
 	max_arrow_num(10),
 	max_arrow_vec(10.0f),
 	arrow_vec(Vec2f::Zero()),

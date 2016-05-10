@@ -2,15 +2,15 @@
 
 ItemManager::ItemManager() {
 
-	//std::string item_file_path = "res/stage/stage" + std::to_string(/*ステージ番号*/) + "/item_file";
+	//std::string item_file_path = "res/stage/stage"/* + std::to_string(ステージ番号) + */"/item.txt";
 	//std::ifstream item_file(item_file_path);
 	//assert(!item_file.fail());
 
 	//while (!item_file.eof())
 	//{
-	//	int item_name;
+	//	int item_id;
 	//	Vec2f pos;
-	//	item_file >> item_name;
+	//	item_file >> item_id;
 	//	item_file >> pos.x();
 	//	item_file >> pos.y();
 
@@ -26,7 +26,7 @@ ItemManager::ItemManager() {
 	//	}
 	//	};
 
-	//	createItem[item_name]();
+	//	createItem[item_id]();
 
 	//}
 }
@@ -50,8 +50,8 @@ void ItemManager::draw() {
 
 	for (auto item : item_list)
 	{
-		/*if (item->is_draw != true)
-			continue;*/
+		if (item->is_draw != true)
+			continue;
 
 		item->draw();
 	}
