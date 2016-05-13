@@ -3,43 +3,41 @@
 
 Bow::Bow() :
 	ItemBase(),
-	max_arrow_num(10),
-	max_arrow_vec(10.0f),
-	arrow_vec(Vec2f::Zero()),
+	max_arrow_vec(10),
+	arrow_vec(arrow_vec_),
 	rad(0.0f)
 {
 	//Textures::set("bow", "res/Texture/Item/Bow.png");
+
+	arrow_vec = Vec2f::Zero();
 }
 
 Bow::Bow(Vec2f _pos, Vec2f _size) :
 	ItemBase(ItemID::BOW, _pos, _size, Vec2f::Zero()),
-	max_arrow_num(10),
-	max_arrow_vec(10.0f),
-	arrow_vec(Vec2f::Zero()),
+	max_arrow_vec(10),
+	arrow_vec(arrow_vec_),
 	rad(0.0f)
 {
 	//Textures::set("bow", "res/Texture/Item/Bow.png");
+
+	arrow_vec = Vec2f::Zero();
 }
 
 Bow::~Bow() {
 
 }
 
-void Bow::putDownTheBow(Vec2f pos) {
+void Bow::putDownTheBow(const Vec2f& pos) {
 
 	this->pos = pos;
 	is_player_have = false;
 	is_draw = true;
 }
 
-
 void Bow::update() {
 
 	drawTheBow();
 	shootTheBow();
-
-	for (auto arrow : arrows)
-		arrow.update();
 }
 
 void Bow::draw() {
@@ -51,42 +49,27 @@ void Bow::draw() {
 	drawFillBox(pos.x() - size.x() / 2, pos.y() - size.y() / 2, size.x(), size.y(), Color::green);
 	//ó\ë™ê¸
 	if (env.isPressKey(GLFW_KEY_ENTER))
-		drawLine(pos.x(), pos.y(), pos.x() + (arrow_vec.x() * 10.0f), pos.y() + (arrow_vec.y() * 10.0f), 10, Color(1.0f, 1.0f, 0.0f, 0.5f));
+		drawLine(pos.x(), pos.y(), pos.x() + (arrow_vec_.x() * 10.0f), pos.y() + (arrow_vec_.y() * 10.0f), 10, Color(1.0f, 1.0f, 0.0f, 0.5f));
 	/*âºíuÇ´*/
-
-	for (auto arrow : arrows)
-		arrow.draw();
 }
 
 void Bow::drawTheBow() {
 
-	if (is_player_have != true)
+	if (!env.isPressKey(GLFW_KEY_ENTER))
 		return;
 
-	if (!env.isPressKey(GLFW_KEY_ENTER))
+	if (is_player_have != true)
 		return;
 
 	changeAngle();
 }
 
-void Bow::shootTheBow() {
+Vec2f Bow::shootTheBow() {
 
-	if (is_player_have != true)
-		return;
+	arrow_vec_.x() = max_arrow_vec * std::cos(rad);
+	arrow_vec_.y() = max_arrow_vec * std::sin(rad);
 
-	if (!env.isPullKey(GLFW_KEY_ENTER))
-		return;
-
-	arrow_vec.x() = max_arrow_vec * std::cos(rad);
-	arrow_vec.y() = max_arrow_vec * std::sin(rad);
-
-	arrows.emplace_back(Arrow(pos, size, arrow_vec));
-
-	if (arrows.size() <= max_arrow_num)
-		return;
-
-	std::list<Arrow>::iterator first_arrow = arrows.begin();
-	arrows.erase(first_arrow);
+	return arrow_vec;
 }
 
 void Bow::changeAngle() {
