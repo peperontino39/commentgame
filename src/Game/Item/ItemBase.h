@@ -4,6 +4,7 @@
 
 enum ItemID
 {
+	GROWBOMBPLACE,
 	BOMB,
 	BOW,
 	ARROW,
@@ -65,3 +66,6 @@ protected:
 	bool is_end_;
 
 };
+
+
+bool collision_BlockToBlcok(const Vec2f& pos1, const Vec2f& size1, const Vec2f& pos2, const Vec2f& size2);

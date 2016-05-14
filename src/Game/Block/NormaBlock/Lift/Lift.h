@@ -8,6 +8,8 @@ public:
 	Lift(Vec2f, Vec2f,int,Vec2i);
 	void draw() override;
 	void update() override;
+	void addpos(Vec2f) override;
+
 private:
 	Vec2i move_sell;
 	bool move_end;

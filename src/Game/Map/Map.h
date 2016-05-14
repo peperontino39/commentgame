@@ -10,6 +10,10 @@
 #include "../Block/NormaBlock/Switch/Switch.h"
 #include "../Block/BombBlock/BombBlock.h"
 #include "../Block/NormaBlock/MoveBlock/MoveBlock.h"
+#include "../Block/NormaBlock/Magma/Magma.h"
+#include "../Block/NormaBlock/Dummy/Dummy.h"
+#include "../Block/NormaBlock/Renga/Renga.h"
+#include "../Block/NormaBlock/Lcicle/Lcicle.h"
 
 #include <vector>
 #include "../Taxture/Taxtures.h"
@@ -24,6 +28,7 @@ public:
 	void Load(int);
 	Vec2f collision(Vec2f, Vec2f, Vec2f);
 	void breakBlock(Vec2f);
+	void push(Vec2f, Vec2f, Vec2f);
 
 private:
 	Vec2i sell(Vec2f);

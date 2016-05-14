@@ -14,8 +14,12 @@ Map::Map()
 	Textures::set("sand", "res/Texture/Block/sand.png");
 	Textures::set("thorn", "res/Texture/Block/thorn.png");
 	Textures::set("switch", "res/Texture/Block/switch.png");
-	Textures::set("rifuto", "res/Texture/Block/rifuto.png");
+	Textures::set("rifuto", "res/Texture/Block/rift.png");
 	Textures::set("bomb", "res/Texture/Block/bomb.png");
+	Textures::set("magma", "res/Texture/Block/magma.png");
+	Textures::set("dummy", "res/Texture/Block/dummy.png");
+	Textures::set("renga", "res/Texture/Block/renga.png");
+	Textures::set("lcicle", "res/Texture/Block/icicle.png");
 
 }
 
@@ -36,7 +40,11 @@ void Map::update()
 	for (auto& it : move_block)
 	{
 		it->update();
-		
+	}
+	for (auto& it : move_block)
+	{
+		it->addpos(this->collision(it->getPos(), it->getSize(), it->getVec()));
+
 	}
 
 }
@@ -128,7 +136,7 @@ void Map::Load(int _stage_num)
 						block_size)));
 				break;
 			case RIFUTO:
-				
+
 				file >> _floor_size >> _move.x() >> _move.y();
 
 				move_block.push_back(std::make_shared<Lift>(
@@ -136,18 +144,35 @@ void Map::Load(int _stage_num)
 						block_size, _floor_size, _move)));
 				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
 				break;
-			case BOMBLOCK:
-				_block.push_back(std::make_shared<BombBlock>(
-					BombBlock(_block_pos,
-						block_size)));
-				break;
+
 			case MOVEBLOCK:
 				move_block.push_back(std::make_shared<MoveBlock>(
 					MoveBlock(_block_pos,
 						block_size)));
 				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
-
 				break;
+			case BlockType::MAGMA:
+				_block.push_back(std::make_shared<Magma>(
+					Magma(_block_pos,
+						block_size)));
+				break;
+			case BlockType::RENGA:
+				_block.push_back(std::make_shared<Renga>(
+					Renga(_block_pos,
+						block_size)));
+				break;
+			case BlockType::DUMMY:
+				_block.push_back(std::make_shared<Dummy>(
+					Dummy(_block_pos,
+						block_size)));
+				break;
+			case BlockType::LCICLE:
+				_block.push_back(std::make_shared<Lcicle>(
+					Lcicle(_block_pos,
+						block_size)));
+				break;
+
+
 			default:
 				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
 				break;
@@ -157,7 +182,7 @@ void Map::Load(int _stage_num)
 		block.push_back(_block);
 		_block.clear();
 	}
-	drawSell = Vec2i(WIDTH / block_size.x(), HEIGHT / block_size.y()+1) / 2;
+	drawSell = Vec2i(WIDTH / block_size.x(), HEIGHT / block_size.y() + 1) / 2;
 }
 
 Vec2f Map::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
@@ -178,8 +203,14 @@ Vec2f Map::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 		}
 	}
 
-	for (auto it: move_block)
+
+	for (auto& it : move_block)
 	{
+
+		/*if (_pos.x() == Vec2f(it->pos_).x() &&
+			_pos.y() == Vec2f(it->pos_).y())
+			continue;
+*/
 		a = it->collision(_pos, _size, _vec);
 		sinking.x() = absmax(sinking.x(), a.x());
 		sinking.y() = absmax(sinking.y(), a.y());
@@ -195,17 +226,31 @@ void Map::breakBlock(Vec2f _pos)
 	Vec2f _block_pos;
 	Vec2i _bigin = sellBigin(_sell, Vec2i(-1, -1));
 	Vec2i _end = sellEnd(_sell, Vec2i(+1, +1));
-	std::cout << "bigin" << _bigin << std::endl;
-	std::cout << "end" << _end << std::endl;
 
 	for (int y = _bigin.y(); y <= _end.y(); y++)
 	{
 		for (int x = _bigin.x(); x <= _end.x(); x++)
 		{
-			_block_pos = Vec2f(x * block_size.x(), -y*block_size.y());
-			block[y][x] = nullptr;
-			block[y][x] = std::make_shared<BlockBase>(BlockBase(_block_pos, block_size));
+			//‰ó‚¹‚é‚©”Û‚©
+			if (block[y][x]->isBreak())
+			{
+				_block_pos = Vec2f(x * block_size.x(), -y*block_size.y());
+					if (block[y][x] == nullptr)
+						block[y][x] = std::make_shared<BlockBase>(BlockBase(_block_pos, block_size));
+				
+			}
 		}
+	}
+
+
+
+}
+
+void Map::push(Vec2f _pos, Vec2f _size, Vec2f _vec)
+{
+	for (auto& it : move_block)
+	{
+		it->push(_pos, _size, _vec);
 	}
 
 }
@@ -221,7 +266,7 @@ Vec2i Map::sell(Vec2f _pos)
 Vec2i Map::sellBigin(Vec2i _sell, Vec2i _add)
 {
 	return Vec2i(
-		std::max(0,_sell.x() + _add.x()),
+		std::max(0, _sell.x() + _add.x()),
 		std::max(0, _sell.y() + _add.y())
 		);
 }
@@ -229,7 +274,7 @@ Vec2i Map::sellBigin(Vec2i _sell, Vec2i _add)
 Vec2i Map::sellEnd(Vec2i _sell, Vec2i _add)
 {
 	return Vec2i(
-		std::min(static_cast<int>(block[0].size()-1), _sell.x() + _add.x()),
-		std::min(static_cast<int>(block.size()-1), _sell.y() + _add.y())
+		std::min(static_cast<int>(block[0].size() - 1), _sell.x() + _add.x()),
+		std::min(static_cast<int>(block.size() - 1), _sell.y() + _add.y())
 		);
 }

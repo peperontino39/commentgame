@@ -1,7 +1,6 @@
 #pragma once
 #include "../AppEnv.h"
 #include"../Easing/easing.h"
-#include "../Taxture/Taxtures.h"
 class Icon {
 	
 public:

@@ -8,7 +8,7 @@ class NormalBlock : public BlockBase
 public:
 	NormalBlock(Vec2f _pos,Vec2f);
 	~NormalBlock();
-	virtual void update() override;
+	virtual void update() override ;
 	Vec2f collision(Vec2f, Vec2f, Vec2f) override;
 	virtual void draw() override;
 

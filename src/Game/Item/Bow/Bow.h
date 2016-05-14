@@ -11,20 +11,20 @@ public:
 	Bow(Vec2f _pos, Vec2f _size);
 	~Bow();
 
-	void putDownTheBow(Vec2f pos);
+	void putDownTheBow(const Vec2f& pos);
+	Vec2f shootTheBow();
 
 	void update() override;
 	void draw() override;
 
+	WritableP<Vec2f> arrow_vec;
+
 private:
 
 	void drawTheBow();
-	void shootTheBow();
 	void changeAngle();
 
-	std::list<Arrow> arrows;
-	int max_arrow_num;
 	float max_arrow_vec;
-	Vec2f arrow_vec;
+	Vec2f arrow_vec_;
 	float rad;
 };

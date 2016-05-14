@@ -12,7 +12,7 @@ void Lift::draw()
 {
 	drawTextureBox(pos.x() - size.x() / 2,
 		pos.y() - size.y() / 2,
-		size.x(), size.y(), 0, 0, 256, 256,
+		size.x(), size.y(), 0, 0, 128, 128,
 		Textures::get("rifuto"));
 	ago_flame_pos = pos;
 }
@@ -41,17 +41,21 @@ void Lift::update()
 
 }
 
+void Lift::addpos(Vec2f)
+{
+}
+
 Vec2f Lift::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 {
 	
 	if (is_hit(pos, size, _pos, _size)) {
 		//è„
-		if (_vec.y() < 0) {
+		//if (_vec.y() < 0) {
 
 			if (_pos.y() > (pos.y() + size.y() / 2 + _size.y() / 2) - 21) {
 				return Vec2f(0, (pos.y() + size.y() / 2 + _size.y() / 2) - _pos.y()) - getVec();
 			}
-		}
+		//}
 		//ç∂
 		if (_vec.x() > 0) {
 			if (_pos.x() < pos.x()) {

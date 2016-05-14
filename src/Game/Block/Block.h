@@ -5,16 +5,18 @@
 #include "../Taxture/Taxtures.h"
 enum BlockType {
 	NON,
-	WHITEBLOCK,
-	BLACKBLOCK,
-	GRASS,
-	SAND,
-	THORN,
-	SWITCH,
-	RIFUTO,
-	BOMBLOCK,
-	MOVEBLOCK
-
+	WHITEBLOCK, //白ブロック
+	BLACKBLOCK, //黒ブロック（壁ブロック）
+	GRASS,      //草ブロック
+	SAND,       //砂ブロック
+	THORN,      //トゲ
+	SWITCH,     //スイッチ
+	RIFUTO,     //リフト
+	MOVEBLOCK,  //動かせるブロック
+	MAGMA,      //マグマ
+	RENGA,      //レンガ
+	DUMMY,      //ダミー
+	LCICLE,     //つらら
 };
 
 
@@ -33,11 +35,19 @@ public:
 	virtual void update() override;
 	virtual void draw() override;
 	virtual bool is_Object() { return false; };
-	Vec2f vec;
+	virtual void push(Vec2f, Vec2f, Vec2f) {};
+	virtual bool isBreak();
+	virtual void Break();
+	virtual bool isBreakfunc() { return true; };
+
+
 	bool up_block;
 	bool down_block;
 	bool left_block;
 	bool right_block;
-	Vec2f getPos();
 	
+	Vec2f getPos();
+	Vec2f getSize();
+	Vec2f getVec();
+
 };
