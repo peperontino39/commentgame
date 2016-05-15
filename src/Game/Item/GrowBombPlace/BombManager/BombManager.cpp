@@ -31,8 +31,10 @@ void BombManager::setup(Vec2f pos, Vec2f size) {
 void BombManager::update() {
 
 	createBomb();
+	catchBomb();
+	deleteBomb();
 
-	for (auto grow_bomb_place : grow_bomb_places)
+	for (auto& grow_bomb_place : grow_bomb_places)
 	{
 		grow_bomb_place.update();
 	}
@@ -58,10 +60,17 @@ void BombManager::createBomb() {
 
 	for (auto grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
 	{
-		if (grow_bomb_place->is_here_bomb != false && grow_bomb_place->respawn_time > 0)
-			continue;
+		if ((grow_bomb_place->is_here_bomb != false))
+		{
+			if ((grow_bomb_place->respawn_time > 0))
+			{
+				continue;
+			}
+		}
+
 
 		bombs.emplace_back(Bomb(grow_bomb_place->createBomb(), block_size, Vec2f::Zero()));
+		grow_bomb_place->is_here_bomb = true;
 	}
 }
 

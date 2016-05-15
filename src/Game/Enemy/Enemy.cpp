@@ -1,7 +1,8 @@
 #include "Enemy.h"
 
+
 Enemy::Enemy(Vec2f _pos, Vec2f _size) : 
-	MoveObject(_pos, _size)
+	CharacterBase(_pos,_size)
 {
 }
 
@@ -17,3 +18,7 @@ void Enemy::draw()
 {
 }
 
+void Enemy::stan(Vec2f pos,Vec2f size)
+{
+
+}
