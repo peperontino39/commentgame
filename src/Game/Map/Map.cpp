@@ -137,7 +137,7 @@ void Map::Load(int _stage_num)
 				break;
 			case RIFUTO:
 
-				file >> _floor_size >> _move.x() >> _move.y();
+				file >>  _move.x() >> _move.y() >> _floor_size;
 
 				move_block.push_back(std::make_shared<Lift>(
 					Lift(_block_pos,
