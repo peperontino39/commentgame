@@ -14,8 +14,13 @@ public:
 	~EnemyHolder();
 	void update();
 	void draw();
+	void playerGetFunction(Vec2f pos, Vec2f size);
+	void load(int _stage_num);
+	std::list<std::shared_ptr<Enemy>> enemy_list();
 	std::vector<std::function<void()>> function;
 	std::list<std::shared_ptr<Enemy>> enemy;
-private:
 	
+private:
+	bool dead_flag;
+
 };
