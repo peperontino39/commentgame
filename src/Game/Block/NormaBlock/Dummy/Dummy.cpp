@@ -1,7 +1,7 @@
 #include "Dummy.h"
 
 Dummy::Dummy(Vec2f _pos, Vec2f _size) :
-	NormalBlock(_pos, _size)
+	BlockBase(_pos, _size)
 {
 
 

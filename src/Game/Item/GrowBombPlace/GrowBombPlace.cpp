@@ -6,8 +6,9 @@ GrowBombPlace::GrowBombPlace() :
 	respawn_time(respawn_time_),
 	is_here_bomb(is_here_bomb_)
 {
-	respawn_time = max_respawn_time;
-	is_here_bomb = false;
+	respawn_time_ = 0;
+	/*respawn_time = max_respawn_time;*/
+	is_here_bomb_ = false;
 }
 
 GrowBombPlace::GrowBombPlace(Vec2f pos, Vec2f size) :
@@ -16,8 +17,9 @@ GrowBombPlace::GrowBombPlace(Vec2f pos, Vec2f size) :
 	respawn_time(respawn_time_),
 	is_here_bomb(is_here_bomb_)
 {
-	respawn_time = max_respawn_time;
-	is_here_bomb = false;
+	respawn_time_ = 0;
+	/*respawn_time = max_respawn_time;*/
+	is_here_bomb_ = false;
 }
 
 GrowBombPlace::~GrowBombPlace() {
@@ -45,8 +47,8 @@ void GrowBombPlace::setup() {
 
 void GrowBombPlace::update() {
 
-	if (is_here_bomb_ == false)
-		respawn_time = std::max(respawn_time - 1, 0);
+	if (is_here_bomb_ == false)	
+		respawn_time_ = std::max(respawn_time_ - 1, 0);
 }
 
 void GrowBombPlace::draw() {

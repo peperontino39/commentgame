@@ -12,6 +12,11 @@ public:
 	{
 		vec = Vec2f::Zero();
 	};
+	Vec2f getVec() {return vec_;}
+	
+	void setVec(Vec2f _vec) {
+		vec = _vec;
+	}
 	virtual void draw() = 0;
 	virtual void update() = 0;
 	virtual void addpos(Vec2f);

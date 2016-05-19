@@ -12,6 +12,19 @@ public:
 	{
 
 	}
+	Vec2f getPos() {
+		return pos;
+	}
+	Vec2f getSize() {
+		return size;
+	}
+	void setPos(Vec2f _pos) {
+		pos = _pos;
+	}
+	void setSize(Vec2f _size) {
+		pos = _size;
+	}
+
 	WritableP<Vec2f> pos_;
 	WritableP<Vec2f> size_;
 protected:
