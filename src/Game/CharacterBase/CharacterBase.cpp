@@ -64,7 +64,7 @@ void CharacterBase::drawPattern(const Vec2f & pos_, const int & index_, const Te
 {
 	Pattern& p = patterns[index_];
 	drawTextureBox(pos_.x() + p.offset.x(), pos_.y() + p.offset.y(),
-				   p.size.x(), p.size.y(),
+				   size.x(), size.y(),
 				   p.start.x(), p.start.y(),
 				   p.size.x(), p.size.y(),
 				   tex_);

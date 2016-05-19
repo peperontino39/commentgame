@@ -17,7 +17,9 @@ public:
 
 private:
 
+	void resourceRoad();
 	void move();
+	void animation();
 
 };
 

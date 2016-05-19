@@ -31,8 +31,12 @@ public:
 
 	void createPlayer(std::string filename) 
 	{
-		std::ifstream open = std::ifstream(filename);
-
+		std::ifstream open(filename);
+		if (!open.is_open())
+		{
+			assert(!"Failed to open player textdata");
+		}
+		
 		Vec2f pos, size;
 		open >> pos.x() >> pos.y();
 		open >> size.x() >> size.y();
