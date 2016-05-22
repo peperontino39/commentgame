@@ -10,16 +10,26 @@ public:
 
 	WritableP<float> gravity;
 	WritableP<float> gravity_max;
+	ReadOnlyP<Direction> direction;
 
-protected:
-	void vector();
-	void fall();
 private:
 
-	float gravity_ = 0.3f;
-	float gravity_max_ = 20;
+	float gravity_;
+	float gravity_max_;
 
-private: // アニメーション
+protected:
+	Direction direction_;
+
+
+protected:
+	// posにベクトルを足す
+	void vector();
+	// 落下
+	void fall();
+	// xベクトルによって画像を反転させる
+	void directionControl();
+
+private:  // アニメーション
 	struct Pattern {
 		Vec2f offset;
 		Vec2f start;
@@ -44,9 +54,8 @@ private: // アニメーション
 		int frame_time;
 	};
 
-	std::vector<Pattern> patterns;
-	std::vector<Action> actions;
-	Chara chara;
+
+	int chara_direction;
 
 	void drawPattern(const Vec2f& pos_,
 					 const int& index_,
@@ -54,14 +63,20 @@ private: // アニメーション
 	void drawAction(const Vec2f& pos_,
 					const int& action_index_, const int& frame_index_,
 					const Texture& tex_);
-	void changeCharaAction(const int& action_index_);
-protected: 
 
+	void patternsSizeChangePoint(const int& current_size_);
+protected:
+	std::vector<Pattern> patterns;
+	std::vector<Action> actions;
+	Chara chara;
+	std::set<int> patterns_sizechange_timing;
+	int patterns_size_difference;
 	// Charaの初期値変更
 	void charaInit(const Chara& chara_);
 	// ファイル読み込み
 	void readPatterns(const std::string& filename_);
 	void readAction(const std::string& filename_);
+
 	// キャラの描画
 	void drawChara(const Vec2f& pos_, const Texture& tex_);
 
@@ -69,5 +84,11 @@ protected:
 	void updateChara();
 	// キー入力を受け付けるか調べる
 	bool canCharaInput();
+	// アニメーション変更
+	void changeCharaAction(const int& action_index_);
+
+
+protected:
+
 
 };

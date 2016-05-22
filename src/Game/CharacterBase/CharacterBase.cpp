@@ -4,9 +4,15 @@
 CharacterBase::CharacterBase(Vec2f _pos, Vec2f _size) :
 	MoveObject(_pos, _size),
 	gravity(gravity_),
-	gravity_max(gravity_max_)
+	gravity_max(gravity_max_),
+	direction(direction_)
 {
 	chara = { 0,0,0 };
+	gravity_ = 0.3f;
+	gravity_max_ = 20;
+	direction_ = Direction::RIGHT;
+	chara_direction = 1;
+	patterns_size_difference = 0;
 }
 
 void CharacterBase::vector()
@@ -18,6 +24,20 @@ void CharacterBase::fall()
 {
 	vec_.y() -= gravity_;
 	vec_.y() = std::max(vec_.y(), -gravity_max_);
+}
+
+void CharacterBase::directionControl()
+{
+	if (vec_.x() > 0)
+	{
+		direction_ = Direction::RIGHT;
+		chara_direction = 1;
+	}
+	else if (vec_.x() < 0)
+	{
+		direction_ = Direction::LEFT;
+		chara_direction = -1;
+	}
 }
 
 void CharacterBase::readPatterns(const std::string & filename_)
@@ -67,7 +87,23 @@ void CharacterBase::drawPattern(const Vec2f & pos_, const int & index_, const Te
 				   size.x(), size.y(),
 				   p.start.x(), p.start.y(),
 				   p.size.x(), p.size.y(),
-				   tex_);
+				   tex_, Color::white,
+				   0,
+				   Vec2f(chara_direction, 1.0f),
+				   size / 2);
+	patternsSizeChangePoint(p.size.x());
+}
+
+void CharacterBase::patternsSizeChangePoint(const int& current_size_)
+{
+	if (patterns_sizechange_timing.find(current_size_) == patterns_sizechange_timing.end())
+	{
+		auto past_size = patterns_sizechange_timing.begin();
+		if (current_size_ - *past_size > 0)
+			patterns_size_difference = current_size_ - *past_size;
+		patterns_sizechange_timing.clear();
+		patterns_sizechange_timing.insert(current_size_);
+	}
 }
 
 void CharacterBase::drawAction(const Vec2f & pos_, const int & action_index_, const int & frame_index_, const Texture & tex_)
@@ -75,6 +111,8 @@ void CharacterBase::drawAction(const Vec2f & pos_, const int & action_index_, co
 	int pattern_index = actions[action_index_].frame[frame_index_].x();
 	drawPattern(pos_, pattern_index, tex_);
 }
+
+
 
 void CharacterBase::changeCharaAction(const int & action_index_)
 {
@@ -98,7 +136,7 @@ void CharacterBase::updateChara()
 {
 	chara.action_time += 1;
 	chara.frame_time += 1;
-	
+
 	if (chara.frame_time == actions[chara.current_action].frame[chara.current_frame].y()) {
 		chara.current_frame += 1;
 		chara.frame_time = 0;
