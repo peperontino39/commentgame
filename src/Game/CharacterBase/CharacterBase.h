@@ -28,6 +28,7 @@ protected:
 	void fall();
 	// xベクトルによって画像を反転させる
 	void directionControl();
+	void directionControlEnemy();
 
 private:  // アニメーション
 	struct Pattern {
