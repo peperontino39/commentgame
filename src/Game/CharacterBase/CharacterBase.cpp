@@ -40,6 +40,20 @@ void CharacterBase::directionControl()
 	}
 }
 
+void CharacterBase::directionControlEnemy()
+{
+	if (vec_.x() > 0)
+	{
+		direction_ = Direction::RIGHT;
+		chara_direction = -1;
+	}
+	else if (vec_.x() < 0)
+	{
+		direction_ = Direction::LEFT;
+		chara_direction = 1;
+	}
+}
+
 void CharacterBase::readPatterns(const std::string & filename_)
 {
 	std::ifstream ifs(filename_);
