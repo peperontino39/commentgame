@@ -12,19 +12,19 @@ public:
 	~GrowBombPlace();
 
 	Vec2f createBomb();
-
 	void respawnTime();
+
+	bool getIsHereBomb() const { return is_here_bomb; }
+	void setIsHereBomb(bool is_here_bomb) { this->is_here_bomb = is_here_bomb; }
+	int getRespawnTime() const { return respawn_time; }
 
 	void setup();
 	void update() override;
 	void draw() override;
 
-	WritableP<int> respawn_time;
-	WritableP<bool> is_here_bomb;
-
 private:
 
-	bool is_here_bomb_;
+	bool is_here_bomb;
 	int max_respawn_time;
-	int respawn_time_;
+	int respawn_time;
 };
