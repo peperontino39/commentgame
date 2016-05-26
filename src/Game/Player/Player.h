@@ -19,9 +19,11 @@ public:
 	enum CharaState {
 		STOP,
 		WALK,
-		DEAD,
+		BOMB_PICK_UP,
+		BOMB_HAVE,
+		BOMB_THROW,
 
-		BOMB,
+		DEAD,
 		BOW,
 	};
 
@@ -30,19 +32,22 @@ private: // ƒLƒƒƒ‰‚Ìó‘Ô•ÏX
 	void charastateUpdate();
 
 	void move();
-private: // •¨‚ğ‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	bool is_having = false;
-
+private: // •¨
+	bool is_pick_up = false;
+	bool is_have = false;
+	bool is_throw = false;
+	void itemThrowMotion();
+	int item_count = 0;
 
 private: // €–S
 	bool is_dead_ = false;
 	void dead();
-	std::set<int> deadsize_change_timing;
+	std::set<int> size_change_timing;
 	int default_size = size.x();
 	void sizeReset();
 	void deadMotion();
 	int dead_count;
-	void deadSizeChange();
+	void sizeChange();
 
 private: // ‰æ‘œ“Ç‚İ‚İ
 	void resourceRoad();
