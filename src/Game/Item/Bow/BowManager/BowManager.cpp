@@ -25,15 +25,12 @@ void BowManager::setup(Vec2f pos, Vec2f size) {
 
 void BowManager::update() {
 
-	pickUpBow();
-	putDownBow();
-
 	for (auto bow : bows)
 	{
 		//プレイヤーが弓を持っているときにプレイヤーと同じ位置に弓を更新する
-		if (bow.is_player_have == true) {
+		if (bow.getIsPlayerHave() == true) {
 
-			bow.pos_ = GetPlayer->getPos();
+			bow.setPos(GetPlayer->getPos());
 		}
 
 		bow.update();
@@ -52,7 +49,7 @@ void BowManager::draw() {
 
 	for (auto bow : bows)
 	{
-		if (bow.is_draw != true)
+		if (bow.getIsDraw() != true)
 			continue;
 
 		bow.update();
@@ -66,18 +63,19 @@ void BowManager::draw() {
 
 void BowManager::createArrow() {
 
-	if (!env.isPullKey(GLFW_KEY_ENTER))
-		return;
-
 	Vec2f arrow_vec;
 
-	for (auto bow : bows)
+	for (auto bow = bows.begin(); bow != bows.end(); ++bow)
 	{
-		if (bow.is_player_have != false) {
+		if ((*bow).getIsPlayerHave() != false) {
 
-			arrow_vec = bow.shootTheBow();
+			arrow_vec = (*bow).shootTheBow();
 
 			break;
+		}
+		else if(bow != --bows.end())
+		{
+			continue;
 		}
 
 		return;
@@ -98,30 +96,24 @@ void BowManager::deleteArrow() {
 
 void BowManager::pickUpBow() {
 
-	if (!env.isPushKey(GLFW_KEY_SPACE))
-		return;
-
 	for (auto bow = bows.begin(); bow != bows.end(); ++bow)
 	{
-		if (bow->is_player_have != false)
+		if (bow->getIsPlayerHave() != false)
 			return;
 
 		if (collision_BlockToBlcok(GetPlayer->getPos(), GetPlayer->getSize(), bow->pos_, bow->size_))
 			continue;
 
-		bow->is_player_have = true;
-		bow->is_draw = false;
+		bow->setIsPlayerHave(true);
+		bow->setIsDraw(false);
 	}
 }
 
 void BowManager::putDownBow() {
 
-	if (!env.isPushKey(GLFW_KEY_ESCAPE))
-		return;
-
 	for (auto bow = bows.begin(); bow != bows.end(); ++bow)
 	{
-		if (bow->is_player_have != true)
+		if (bow->getIsPlayerHave() != true)
 			continue;
 
 		bow->putDownTheBow(GetPlayer->getPos());

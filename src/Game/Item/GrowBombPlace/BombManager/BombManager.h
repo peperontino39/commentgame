@@ -16,7 +16,7 @@ public:
 
 	void createGrowBombPlace(Vec2f pos, Vec2f size);
 
-	void setup(Vec2f pos, Vec2f size);
+	void Setup();
 	void update();
 	void draw();
 
