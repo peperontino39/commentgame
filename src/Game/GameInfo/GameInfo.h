@@ -17,4 +17,4 @@ public :
 
 };
 
-#define GameInfo GameInformation::get();
+#define GameInfo GameInformation::get()
