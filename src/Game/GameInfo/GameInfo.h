@@ -8,7 +8,7 @@ public :
 		stage_num;
 	};
 	static GameInformation& get() {
-		static GameInfo _g;
+		static GameInformation _g;
 		return _g;
 
 	}
