@@ -21,32 +21,31 @@ Vec2f getAnimationCutPosition(
 Bomb::Bomb() :
 	ItemBase(),
 	explosion_count(600),
+	explosion_end_count(120),
 	animation_count(0),
 	respawn_time(60),
-	is_explosion(is_explosion_),
-	is_respawn_bomb(is_respawn_bomb_),
+	is_explosion(false),
+	is_respawn_bomb(true),
 	cut_pos(Vec2f::Zero()),
 	cut_size(Vec2f(0.0f, 0.0f)),
 	color(Vec3f(1.0f, 1.0f, 1.0f))
 {
 	Textures::set("bomb", "res/Texture/Block/bomb.png");
-	is_explosion = false;
-	is_respawn_bomb = true;
 }
 
 Bomb::Bomb(Vec2f _pos, Vec2f _size, Vec2f vec) :
 	ItemBase(ItemID::BOMB, _pos, _size, vec),
 	explosion_count(600),
+	explosion_end_count(120),
 	animation_count(0),
-	is_explosion(is_explosion_),
-	is_respawn_bomb(is_respawn_bomb_),
+	respawn_time(60),
+	is_explosion(false),
+	is_respawn_bomb(true),
 	cut_pos(Vec2f(0.0f, 0.0f)),
 	cut_size(Vec2f(256.0f, 256.0f)),
 	color(Vec3f(1.0f, 1.0f, 1.0f))
 {
 	Textures::set("bomb", "res/Texture/Block/bomb.png");
-	is_explosion = false;
-	is_respawn_bomb = true;
 }
 
 Bomb::~Bomb() {
@@ -62,10 +61,10 @@ void Bomb::update() {
 
 void Bomb::draw() {
 
-	drawTextureBox(pos.x() - size.x() / 2,
-		pos.y() - size.y() / 2,
-		size.x(),
-		size.y(),
+	drawTextureBox(getPos().x() - getSize().x() / 2,
+		getPos().y() - getSize().y() / 2,
+		getSize().x(),
+		getSize().y(),
 		cut_pos.x(),
 		cut_pos.y(),
 		cut_size.x(),
@@ -86,12 +85,12 @@ void Bomb::countDown() {
 	--explosion_count;
 
 	if (explosion_count <= 0)
-		is_explosion_ = true;
+		is_explosion = true;
 }
 
 void Bomb::animation() {
 
-	if (is_explosion_ != true)
+	if (is_explosion != true)
 		return;
 
 	cut_pos = getAnimationCutPosition(cut_size, animation_count, Vec2i(20, 120), Vec2i(6, 2));
@@ -99,22 +98,22 @@ void Bomb::animation() {
 	--explosion_end_count;
 
 	if (explosion_end_count <= 0)
-		is_end_ = true;
+		is_end = true;
 }
 
 void Bomb::updatePos() {
 
-	if (vec_.x() > 0.0f)
-		vec_.x() -= 0.1f;
-	else if (vec_.x() < 0.0f)
-		vec_.x() += 0.1f;
+	if (getVec().x() > 0.0f)
+		setVec(Vec2f(getVec().x() - 0.1f, getVec().y()));
+	else if (getVec().x() < 0.0f)
+		setVec(Vec2f(getVec().x() + 0.1f, getVec().y()));
 
-	vec_.y() -= 0.3f;
+	setVec(Vec2f(getVec().x(), getVec().y() - 0.3f));
 
-	if (vec_.x() >= -0.1f && vec_.x() < 0.1f)
-		vec_.x() = 0.0f;
-	if (vec_.y() >= -3.0f)
-		vec_.y() = -3.0f;
+	if (getVec().x() >= -0.1f && getVec().x() < 0.1f)
+		setVec(Vec2f(0.0f, getVec().y()));
+	if (getVec().y() >= -3.0f)
+		setVec(Vec2f(getVec().x(), -3.0f));
 
-	pos = vec;
+	setPos(Vec2f(getPos().x() + getVec().x(), getPos().y() + getVec().y()));
 }

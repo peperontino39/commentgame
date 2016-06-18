@@ -19,19 +19,18 @@ void BombManager::deleteitem() {
 void BombManager::createGrowBombPlace(Vec2f pos, Vec2f size) {
 
 	grow_bomb_places.emplace_back(pos, size);
-}
-
-void BombManager::setup(Vec2f pos, Vec2f size) {
-
-	grow_bomb_places.emplace_back(GrowBombPlace(pos, size));
 
 	block_size = size;
+}
+
+void BombManager::Setup()
+{
+
 }
 
 void BombManager::update() {
 
 	createBomb();
-	catchBomb();
 	deleteBomb();
 
 	for (auto& grow_bomb_place : grow_bomb_places)
@@ -41,8 +40,8 @@ void BombManager::update() {
 
 	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
-		if (bomb->is_player_have == true)
-			bomb->pos_ = Vec2f(GetPlayer->getPos().x(), GetPlayer->getPos().y() + GetPlayer->getSize().y());
+		if (bomb->getIsPlayerHave() == true)
+			bomb->setPos(Vec2f(GetPlayer->getPos().x(), GetPlayer->getPos().y() + GetPlayer->getSize().y()));
 
 		bomb->update();
 	}
@@ -58,19 +57,16 @@ void BombManager::draw() {
 
 void BombManager::createBomb() {
 
+
 	for (auto grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
 	{
-		if ((grow_bomb_place->is_here_bomb != false))
-		{
-			if ((grow_bomb_place->respawn_time > 0))
-			{
-				continue;
-			}
-		}
-
+		if (grow_bomb_place->getIsHereBomb() != false)
+			continue;
+		if (grow_bomb_place->getRespawnTime() > 0)
+			continue;
 
 		bombs.emplace_back(Bomb(grow_bomb_place->createBomb(), block_size, Vec2f::Zero()));
-		grow_bomb_place->is_here_bomb = true;
+		grow_bomb_place->setIsHereBomb(true);
 	}
 }
 
@@ -78,7 +74,7 @@ void BombManager::deleteBomb() {
 
 	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
-		if (bomb->is_end != true)
+		if (bomb->getIsEnd() != true)
 			continue;
 
 		bombs.erase(bomb);
@@ -87,31 +83,28 @@ void BombManager::deleteBomb() {
 
 void BombManager::catchBomb() {
 
-	if (!env.isPushKey(GLFW_KEY_ENTER))
-		return;
-
 	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
-		if (bomb->is_explosion != false)
+		if (bomb->getIsExplosion() != false)
 			continue;
 
 		if (!collision_BlockToBlcok(GetPlayer->getPos(), GetPlayer->getSize(), bomb->pos_, bomb->size_))
 			continue;
 
-		bomb->is_player_have = true;
-		bomb->is_countdown = true;
+		bomb->setIsPlayerHave(true);
+		bomb->setIsCountdown(true);
 
-		if (bomb->is_respawn_bomb != false)
+		if (bomb->getIsRespawnBomb() != false)
 			return;
 
-		bomb->is_respawn_bomb = false;
+		bomb->setIsRespawnBomb(false);
 
 		for (auto grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
 		{
-			if (!collision_BlockToBlcok(bomb->pos_, bomb->size_, grow_bomb_place->pos_, grow_bomb_place->size_))
+			if (!collision_BlockToBlcok(bomb->getPos(), bomb->getPos(), grow_bomb_place->getPos(), grow_bomb_place->getSize()))
 				continue;
 
-			grow_bomb_place->is_here_bomb = false;
+			grow_bomb_place->setIsHereBomb(false);
 			grow_bomb_place->respawnTime();
 		}
 	}

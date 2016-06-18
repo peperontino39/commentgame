@@ -35,7 +35,7 @@ void ItemManager::setup() {
 	{
 		[&] {
 
-		bomb_manager.setup(item_pos, block_size);
+		bomb_manager.createGrowBombPlace(item_pos, block_size);
 	},
 		[&] {
 
