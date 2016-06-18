@@ -67,7 +67,6 @@ Vec2f Player::getSize()
 	return size;
 }
 
-
 void Player::move()
 {
 	float speed = 0.2f;
@@ -289,7 +288,7 @@ void Player::animationUpdate()
 
 void Player::animationDraw()
 {
-	drawChara(pos, Textures::get("Player"));
+	drawPlayerChara(pos, Textures::get("Player"));
 }
 
 float Player::getAxis(const std::string& axis_)

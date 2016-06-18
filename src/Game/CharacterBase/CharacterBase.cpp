@@ -101,12 +101,13 @@ void CharacterBase::drawPattern(const Vec2f & pos_, const int & index_, const Te
 				   size.x(), size.y(),
 				   p.start.x(), p.start.y(),
 				   p.size.x(), p.size.y(),
-				   tex_, Color::white,
+				   tex_, color,
 				   0,
 				   Vec2f(chara_direction, 1.0f),
 				   size / 2);
 	patternsSizeChangePoint(p.size.x());
 }
+
 
 void CharacterBase::patternsSizeChangePoint(const int& current_size_)
 {
@@ -145,6 +146,23 @@ void CharacterBase::drawChara(const Vec2f & pos_, const Texture & tex_)
 {
 	drawAction(pos_, chara.current_action, chara.current_frame, tex_);
 }
+
+void CharacterBase::drawPlayerChara(const Vec2f & pos_, const Texture & tex_)
+{
+	int pattern_index = actions[chara.current_action].frame[chara.current_frame].x();
+
+	Pattern& p = patterns[pattern_index];
+
+	drawTextureBox(pos_.x() + p.offset.x(), pos_.y() + p.offset.y(),
+				   p.size.x(), p.size.y(),
+				   p.start.x(), p.start.y(),
+				   p.size.x(), p.size.y(),
+				   tex_, Color::white,
+				   0,
+				   Vec2f(chara_direction, 1.0f),
+				   size / 2);
+}
+
 
 void CharacterBase::updateChara()
 {
