@@ -65,6 +65,7 @@ private:  // アニメーション
 					const int& action_index_, const int& frame_index_,
 					const Texture& tex_);
 
+
 	void patternsSizeChangePoint(const int& current_size_);
 protected:
 	std::vector<Pattern> patterns;
@@ -72,6 +73,9 @@ protected:
 	Chara chara;
 	std::set<int> patterns_sizechange_timing;
 	int patterns_size_difference;
+
+	Color color = Color::white;
+
 	// Charaの初期値変更
 	void charaInit(const Chara& chara_);
 	// ファイル読み込み
@@ -80,6 +84,10 @@ protected:
 
 	// キャラの描画
 	void drawChara(const Vec2f& pos_, const Texture& tex_);
+
+	void drawPlayerChara(const Vec2f& pos_, const Texture& tex_);
+
+
 
 	// アニメーションの更新
 	void updateChara();
