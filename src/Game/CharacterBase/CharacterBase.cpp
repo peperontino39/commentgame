@@ -94,6 +94,72 @@ void CharacterBase::readAction(const std::string & filename_)
 	}
 }
 
+void CharacterBase::readMemosPattern(const std::string & filename_)
+{
+	std::ifstream ifs(filename_);
+	int count;
+	Pattern ptemp;
+
+	while (!ifs.eof())
+	{
+		std::string slash;
+		ifs >> slash;
+		if (slash == "//")
+		{
+			std::string memo;
+			while (std::getline(ifs, memo))
+			{
+				std::cout << memo << std::endl;
+				break;
+			}
+
+		}
+
+		ifs >> count;
+		for (int i = 0; i < count; i++)
+		{
+			ifs >> ptemp.offset.x() >> ptemp.offset.y();
+			ifs >> ptemp.start.x() >> ptemp.start.y();
+			ifs >> ptemp.size.x() >> ptemp.size.y();
+
+			patterns.push_back(ptemp);
+		}
+	}
+}
+
+void CharacterBase::readMemosAction(const std::string & filename_)
+{
+	std::ifstream ifs(filename_);
+	int count;
+	Action atemp;
+
+	while (!ifs.eof())
+	{
+		std::string slash;
+		ifs >> slash;
+		if (slash == "//")
+		{
+			std::string memo;
+			while (std::getline(ifs, memo))
+			{
+				std::cout << memo << std::endl;
+				break;
+			}
+
+		}
+
+		ifs >> count;
+		atemp.frame = std::vector<Vec2i>(count);
+		for (int i = 0; i < count; i++)
+		{
+			ifs >> atemp.frame[i].x() >> atemp.frame[i].y();
+		}
+		ifs >> atemp.next_action;
+		ifs >> atemp.stiff_time;
+		actions.push_back(atemp);
+	}
+}
+
 void CharacterBase::drawPattern(const Vec2f & pos_, const int & index_, const Texture & tex_)
 {
 	Pattern& p = patterns[index_];
@@ -157,7 +223,7 @@ void CharacterBase::drawPlayerChara(const Vec2f & pos_, const Texture & tex_)
 				   p.size.x(), p.size.y(),
 				   p.start.x(), p.start.y(),
 				   p.size.x(), p.size.y(),
-				   tex_, Color::white,
+				   tex_, color,
 				   0,
 				   Vec2f(chara_direction, 1.0f),
 				   size / 2);

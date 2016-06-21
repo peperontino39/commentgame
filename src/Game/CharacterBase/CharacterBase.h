@@ -82,6 +82,10 @@ protected:
 	void readPatterns(const std::string& filename_);
 	void readAction(const std::string& filename_);
 
+	void readMemosPattern(const std::string& filename_);
+	void readMemosAction(const std::string& filename_);
+
+
 	// ƒLƒƒƒ‰‚Ì•`‰æ
 	void drawChara(const Vec2f& pos_, const Texture& tex_);
 
