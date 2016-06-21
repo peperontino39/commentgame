@@ -19,12 +19,20 @@ public:
 	enum CharaState {
 		STOP,
 		WALK,
+
 		BOMB_PICK_UP,
 		BOMB_HAVE,
+		//BOMB_HAVE_MOVE,
 		BOMB_THROW,
 
+		BOW_HAVE,
+		//BOW_HAVE_MOVE,
+		BOW_SHOT,
+
 		DEAD,
-		BOW,
+
+		CLEAR,
+
 	};
 
 private: // キャラの状態変更
@@ -38,6 +46,20 @@ private: // 物
 	bool is_throw = false;
 	void itemThrowMotion();
 	int item_count = 0;
+
+public: // ステージクリア
+	bool getStageClear() { return is_stageclear; }
+private:
+	bool is_stageclear = false;
+
+public: // 弓
+	bool getIsBowHave() { return is_bow_have; }
+	bool getIsBowShot() { return is_bow_shot; }
+
+private:
+
+	bool is_bow_have = false;
+	bool is_bow_shot = false;
 
 private: // 死亡
 	bool is_dead_ = false;
@@ -64,12 +86,6 @@ private: // アニメーション
 	void animationUpdate();
 	void animationDraw();
 
-private: // axis試し
-	float axis = 0;
-	float getAxis(const std::string& axis_);
-
-	std::unordered_map<std::string, int> axis_name;
-	void axisSetup();
 
 
 };

@@ -128,8 +128,8 @@ void Player::dead()
 	{
 		size.x() = default_size;
 	}
-
 }
+
 void Player::sizeReset()
 {
 	size.x() = default_size;
@@ -181,8 +181,14 @@ void Player::charastateUpdate()
 		charastate = BOMB_HAVE;
 	if (is_throw)
 		charastate = BOMB_THROW;
+	if (is_bow_have)
+		charastate = BOW_HAVE;
+	if (is_bow_shot)
+		charastate = BOW_SHOT;
 	if (is_dead_)
 		charastate = DEAD;
+	if (is_stageclear)
+		charastate = CLEAR;
 
 #if 1
 	// 死亡仮置き
@@ -212,10 +218,8 @@ void Player::charastateUpdate()
 				item_count = 0;
 			}
 		}
-	}
 
-	if (canCharaInput())
-	{
+
 		if (env.isPushKey('I'))
 		{
 			if (is_have == false)
@@ -230,11 +234,47 @@ void Player::charastateUpdate()
 			}
 		}
 	}
+
 	if (is_pick_up == true)
 		item_count++;
 	if (is_throw == true)
 		item_count++;
 
+	// ステージクリア仮置き
+	if (canCharaInput())
+	{
+		if (env.isPushKey('C'))
+		{
+			is_stageclear = !is_stageclear;
+		}
+	}
+
+	if (canCharaInput())
+	{
+		if (item_count > 10)
+		{
+			if (is_bow_shot == true)
+			{
+				is_bow_shot = false;
+				item_count = 0;
+			}
+		}
+
+		if (env.isPushKey('B'))
+		{
+			if (is_bow_have == false)
+				is_bow_have = true;
+			else
+			{
+				is_bow_shot = true;
+				is_bow_have = false;
+			}
+		}
+	}
+
+
+	if (is_bow_shot)
+		item_count++;
 
 #endif
 }
@@ -262,8 +302,8 @@ void Player::animationSetup()
 	std::string patterns("res/Texture/Player/PlayerPattern.txt");
 	std::string action("res/Texture/Player/PlayerAction.txt");
 
-	readPatterns(patterns);
-	readAction(action);
+	readMemosPattern(patterns);
+	readMemosAction(action);
 
 	std::ifstream animation_name_file("res/Texture/Player/PlayerAnimationName.txt");
 
@@ -291,15 +331,13 @@ void Player::animationDraw()
 	drawPlayerChara(pos, Textures::get("Player"));
 }
 
-float Player::getAxis(const std::string& axis_)
-{
-	int max = 1, min = -1;
 
 
-	return 0.0f;
-}
 
-void Player::axisSetup()
-{
 
-}
+
+
+
+
+
+
