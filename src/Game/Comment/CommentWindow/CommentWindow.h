@@ -11,7 +11,8 @@ private:
     static Vec2f pPos;
     static Vec2f pSize;
 public:
-    static bool isChange();
+    static bool isChange( );
 public:
-    static void update();
+    static void update( );
+    static void clear( );
 };

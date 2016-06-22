@@ -1,6 +1,7 @@
 #pragma once
 #include "../Bow/BowManager/BowManager.h"
 #include "../GrowBombPlace/BombManager/BombManager.h"
+#include "../../GameInfo/GameInfo.h"
 
 #define IManger ItemManager::get()
 
@@ -23,6 +24,9 @@ public:
 
 		return item_manager;
 	}
+
+	BombManager& getbomb();
+	BowManager& getbow();
 
 private:
 

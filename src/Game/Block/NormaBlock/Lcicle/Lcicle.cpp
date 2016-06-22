@@ -4,8 +4,24 @@ Lcicle::Lcicle(Vec2f _pos, Vec2f _size) :
 	NormalBlock(_pos, _size)
 {
 
+	is_fall = false;
+}
 
+void Lcicle::update()
+{
+	vec_.y() = 0;
+	vec_.y() = -is_fall;
+	pos += vec_;
+}
 
+bool Lcicle::isBreak()
+{
+	return true;
+}
+
+void Lcicle::Break()
+{
+	is_fall = true;
 }
 
 

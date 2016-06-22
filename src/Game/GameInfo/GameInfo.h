@@ -2,19 +2,16 @@
 #include "../AppEnv.h"
 
 
-class GameInformation {
+class GameInfo {
 public : 
-	GameInformation() {
-		stage_num;
+	GameInfo() {
+		stage_num = 1;
 	};
-	static GameInformation& get() {
-		static GameInformation _g;
+	static GameInfo& get() {
+		static GameInfo _g;
 		return _g;
 
 	}
-
 	int stage_num;
 
 };
-
-#define GameInfo GameInformation::get()

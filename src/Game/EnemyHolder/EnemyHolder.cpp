@@ -2,18 +2,28 @@
 
 EnemyHolder::EnemyHolder()
 {
-	dead_flag = false;
-	
+
+
 }
 
 EnemyHolder::~EnemyHolder()
 {
 }
 
-void EnemyHolder::update(){
-	
+void EnemyHolder::update() {
+
 	for (auto it : enemy) {
-		it->update();
+		it->isDead();
+		if (it->isDead() == false) {
+			it->update();
+		}
+	}
+	for (auto itr = enemy.begin(); itr != enemy.end(); itr++)
+	{
+		if ((*itr)->getArrive() == false) {
+			enemy.erase(itr);
+			break;
+		}
 	}
 }
 
@@ -24,13 +34,11 @@ void EnemyHolder::draw()
 	}
 }
 
-void EnemyHolder::playerGetFunction(Vec2f pos, Vec2f size)
+void EnemyHolder::dead(Vec2f pos, Vec2f size, bool dead)
 {
 	for (auto it : enemy) {
-		if (it->kill(pos, size)) {
-			dead_flag = true;
-		}
-		
+		it->kill(pos, size);
+		it->kill(dead);
 	}
 }
 
@@ -45,9 +53,9 @@ void EnemyHolder::load(int _stage_num)
 	function.push_back([&] {enemy.push_back(std::make_shared<Skelton>(Vec2f(0, 0), Vec2f(0, 0))); });
 	function.push_back([&] {enemy.push_back(std::make_shared<Golem>(Vec2f(0, 0), Vec2f(0, 0))); });
 	function.push_back([&] {enemy.push_back(std::make_shared<Boss>(Vec2f(0, 0), Vec2f(0, 0))); });
-	
+
 	int count;
-	
+
 	file >> count;
 	if (1 < count) {
 		int type;
@@ -71,17 +79,14 @@ void EnemyHolder::load(int _stage_num)
 		(*itr)->size_ = size;
 
 		if (2 <= count) {
-			file >> type;
-			function[type]();
-			itr++;
-
 
 			for (int i = 0; i < count - 1; i++) {
-				if (0 != i) {
-					int type;
-					file >> type;
-					function[type]();
-				}
+
+				int type;
+				file >> type;
+				function[type]();
+				itr++;
+
 				Vec2f pos;
 				Vec2f size;
 
@@ -93,13 +98,45 @@ void EnemyHolder::load(int _stage_num)
 
 				(*itr)->pos_ = pos;
 				(*itr)->size_ = size;
-				itr++;
+
 			}
 		}
 	}
+}
+
+Vec2f EnemyHolder::player_ride(Vec2f player_pos, Vec2f player_size, Vec2f player_vec)
+{
+	for (auto it : enemy) {
+		return it->ride(player_pos, player_size, player_vec);
+	}
+
+}
+
+
+
+void EnemyHolder::stan(Vec2f item_pos, Vec2f item_size)
+{
+	for (auto it : enemy) {
+		for (auto it : enemy) {
+			it->stan(item_pos, item_size);
+		}
+	}
+
+}
+
+bool EnemyHolder::player_dead(Vec2f pos, Vec2f size)
+{
+	for (auto it : enemy) {
+		if (it->attack(pos, size) == true) {
+			return true;
+		}
+	}
+	return false;
 }
 
 std::list<std::shared_ptr<Enemy>> EnemyHolder::enemy_list()
 {
 	return enemy;
 }
+
+

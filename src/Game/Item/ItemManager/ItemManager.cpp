@@ -17,11 +17,12 @@ void ItemManager::setup() {
 	bomb_manager.deleteitem();
 	bow_manager.deleteitem();
 
-	std::string stage_item_file_path = "res/stage/stage10/item.txt";
+	std::string stage_item_file_path = "res/stage/stage" + std::to_string(GameInfo::get().stage_num) + "/item.txt";
+	//std::string stage_item_file_path = "res/stage/stage11/item.txt";
 	std::ifstream stage_item_file(stage_item_file_path);
 	assert(!stage_item_file.fail());
 
-	std::string block_size_file_path = "res/stage/stage10/BlockSize.txt";
+	std::string block_size_file_path = "res/stage/stage11/BlockSize.txt";
 	std::ifstream block_size_file(block_size_file_path);
 	assert(!block_size_file.fail());
 
@@ -65,4 +66,15 @@ void ItemManager::draw() {
 
 	bomb_manager.draw();
 	bow_manager.draw();
+}
+
+BombManager & ItemManager::getbomb()
+{
+	return bomb_manager;
+}
+
+BowManager & ItemManager::getbow()
+{
+
+	return bow_manager;
 }

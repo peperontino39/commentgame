@@ -1,5 +1,7 @@
 #pragma once
 #include "../Enemy.h"
+#include "../../Taxture/Taxtures.h"
+#include "Fire.h"
 class Boss : public Enemy
 {
 public:
@@ -9,9 +11,16 @@ public:
 	void update() override;
 	void draw() override;
 	void move() override;
-	void stan(Vec2f item_pos, Vec2f item_size) override;
-	bool kill(Vec2f player_pos, Vec2f player_size) override;
+	void addpos(Vec2f) override;
 	bool attack(Vec2f player_pos, Vec2f player_size) override;
+	void breath();
+	void blade();
+	Vec2f ride(Vec2f player_pos, Vec2f player_size, Vec2f vec) override;
+	void changeDirection(Vec2f player_pos);
 private:
-
+	int attack_count;
+	int attack_type;
+	Vec2f attack_pos;
+	Vec2f attack_size;
+	std::vector<std::shared_ptr<Fire>> fire;
 };

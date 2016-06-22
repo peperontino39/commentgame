@@ -7,6 +7,6 @@ public:
     static int eraseCount;
     static size_t frameCounter;
 public:
-    static void update();
-    static void clear();
+    static void update( );
+    static void clear( );
 };

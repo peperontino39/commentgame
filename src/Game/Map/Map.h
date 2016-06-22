@@ -14,7 +14,8 @@
 #include "../Block/NormaBlock/Dummy/Dummy.h"
 #include "../Block/NormaBlock/Renga/Renga.h"
 #include "../Block/NormaBlock/Lcicle/Lcicle.h"
-
+#include "../Block/NormaBlock/Cave/Cave.h"
+#include "../Block/NormaBlock/CheckPoint/CheckPoint.h"
 #include <vector>
 #include "../Taxture/Taxtures.h"
 
@@ -29,6 +30,7 @@ public:
 	Vec2f collision(Vec2f, Vec2f, Vec2f);
 	void breakBlock(Vec2f);
 	void push(Vec2f, Vec2f, Vec2f);
+	void checkPoint(const Vec2f&,const Vec2f&);
 
 private:
 	Vec2i sell(Vec2f);

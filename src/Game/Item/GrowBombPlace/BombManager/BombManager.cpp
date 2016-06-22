@@ -31,17 +31,30 @@ void BombManager::Setup()
 void BombManager::update() {
 
 	createBomb();
+	catchBomb();
 	deleteBomb();
+	ReleaseBomb();
 
 	for (auto& grow_bomb_place : grow_bomb_places)
 	{
 		grow_bomb_place.update();
 	}
 
-	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
+	for (auto& bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
 		if (bomb->getIsPlayerHave() == true)
-			bomb->setPos(Vec2f(GetPlayer->getPos().x(), GetPlayer->getPos().y() + GetPlayer->getSize().y()));
+		{
+			if (bomb->getBombStatus() == BombStatus::COUNTDOWN)
+			{
+				Direction direction = GetPlayer->direction;
+
+				if (direction == Direction::RIGHT)
+					bomb->setPos(Vec2f(GetPlayer->getPos().x() + 20.0f, GetPlayer->getPos().y() - 30.0f));
+				else if (direction == Direction::LEFT)
+					bomb->setPos(Vec2f(GetPlayer->getPos().x() - 20.0f, GetPlayer->getPos().y() - 30.0f));
+			}
+		}
+
 
 		bomb->update();
 	}
@@ -49,16 +62,20 @@ void BombManager::update() {
 
 void BombManager::draw() {
 
-	for (auto bomb : bombs)
+	for (auto& bomb : bombs)
 	{
 		bomb.draw();
+	}
+
+	for (auto &grow_bomb_place : grow_bomb_places)
+	{
+		grow_bomb_place.draw();
 	}
 }
 
 void BombManager::createBomb() {
 
-
-	for (auto grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
+	for (auto& grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
 	{
 		if (grow_bomb_place->getIsHereBomb() != false)
 			continue;
@@ -72,40 +89,81 @@ void BombManager::createBomb() {
 
 void BombManager::deleteBomb() {
 
-	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
+	for (auto& bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
 		if (bomb->getIsEnd() != true)
 			continue;
 
 		bombs.erase(bomb);
+		return;
 	}
 }
 
 void BombManager::catchBomb() {
 
-	for (auto bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
+	if (!env.isPushKey(GLFW_KEY_ENTER))
+		return;
+
+	for (auto& bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
 	{
-		if (bomb->getIsExplosion() != false)
+		if (bomb->getBombStatus() == BombStatus::EXPLOSION ||
+			bomb->getBombStatus() == BombStatus::GROWING)
 			continue;
 
-		if (!collision_BlockToBlcok(GetPlayer->getPos(), GetPlayer->getSize(), bomb->pos_, bomb->size_))
+		if (!utl::Colli::rect_Rect(GetPlayer->getPos() - GetPlayer->getSize() / 2.0f, GetPlayer->getSize(), bomb->getPos() - bomb->getSize() / 2.0f, bomb->getSize()))
 			continue;
 
 		bomb->setIsPlayerHave(true);
-		bomb->setIsCountdown(true);
+		bomb->setBombStatus(BombStatus::CATCHING);
+		bomb->setCatchPos(bomb->getPos());
 
-		if (bomb->getIsRespawnBomb() != false)
-			return;
+		Direction direction = GetPlayer->direction;
 
-		bomb->setIsRespawnBomb(false);
+		if (direction == Direction::RIGHT)
+			bomb->setCathcedPos(Vec2f(GetPlayer->getPos().x() + 20.0f, GetPlayer->getPos().y() - 30.0f));
+		else if (direction == Direction::LEFT)
+			bomb->setCathcedPos(Vec2f(GetPlayer->getPos().x() - 20.0f, GetPlayer->getPos().y() - 30.0f));
 
 		for (auto grow_bomb_place = grow_bomb_places.begin(); grow_bomb_place != grow_bomb_places.end(); ++grow_bomb_place)
 		{
-			if (!collision_BlockToBlcok(bomb->getPos(), bomb->getPos(), grow_bomb_place->getPos(), grow_bomb_place->getSize()))
+			if (!utl::Colli::rect_Rect(
+				grow_bomb_place->getPos() - grow_bomb_place->getSize() / 2.0f,
+				GetPlayer->getSize(),
+				bomb->getPos() - bomb->getSize() / 2.0f,
+				bomb->getSize()))
 				continue;
 
 			grow_bomb_place->setIsHereBomb(false);
 			grow_bomb_place->respawnTime();
 		}
+
+		return;
+	}
+}
+
+void BombManager::ReleaseBomb()
+{
+	if (!env.isPushKey('P'))
+		return;
+
+	for (auto &bomb = bombs.begin(); bomb != bombs.end(); ++bomb)
+	{
+		if (bomb->getIsPlayerHave() != true)
+			continue;
+		if (bomb->getBombStatus() != BombStatus::COUNTDOWN)
+			continue;
+
+		bomb->setIsPlayerHave(false);
+		Direction dir = GetPlayer->direction;
+
+		if (GetPlayer->getVec().x() != 0.0f)
+		{
+			if (dir == Direction::LEFT)
+				bomb->setBVec(Vec2f(-2.0f, 5.0f));
+			if (dir == Direction::RIGHT)
+				bomb->setBVec(Vec2f(2.0f, 5.0f));
+		}
+
+		return;
 	}
 }

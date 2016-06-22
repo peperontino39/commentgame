@@ -20,6 +20,9 @@ Map::Map()
 	Textures::set("dummy", "res/Texture/Block/dummy.png");
 	Textures::set("renga", "res/Texture/Block/renga.png");
 	Textures::set("lcicle", "res/Texture/Block/icicle.png");
+	Textures::set("cave", "res/Texture/Block/cavewall.png");
+	Textures::set("flagparts", "res/Texture/Block/FlagParts.png");
+	Textures::set("flag", "res/Texture/Block/Flag.png");
 
 }
 
@@ -137,7 +140,7 @@ void Map::Load(int _stage_num)
 				break;
 			case RIFUTO:
 
-				file >>  _move.x() >> _move.y() >> _floor_size;
+				file >> _move.x() >> _move.y() >> _floor_size;
 
 				move_block.push_back(std::make_shared<Lift>(
 					Lift(_block_pos,
@@ -167,10 +170,21 @@ void Map::Load(int _stage_num)
 						block_size)));
 				break;
 			case BlockType::LCICLE:
-				_block.push_back(std::make_shared<Lcicle>(
+				move_block.push_back(std::make_shared<Lcicle>(
 					Lcicle(_block_pos,
 						block_size)));
+				_block.push_back(std::make_shared<BlockBase>(BlockBase(_block_pos, block_size)));
 				break;
+			case BlockType::CAVE:
+				_block.push_back(std::make_shared<Cave>(Cave(_block_pos, block_size)));
+				break;
+			case BlockType::DROP:
+				_block.push_back(std::make_shared<Cave>(Cave(_block_pos, block_size)));
+				break;
+			case BlockType::CHECKPOINT:
+				_block.push_back(std::make_shared<CheckPoint>(CheckPoint(_block_pos, block_size)));
+				break;
+
 
 
 			default:
@@ -187,11 +201,12 @@ void Map::Load(int _stage_num)
 
 Vec2f Map::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 {
+	int _coll_han = 2;
 	Vec2f sinking = Vec2f::Zero();
 	Vec2f a;
 	Vec2i _sell = sell(_pos);
-	Vec2i _bigin = sellBigin(_sell, Vec2i(-1, -1));
-	Vec2i _end = sellEnd(_sell, Vec2i(+1, +1));
+	Vec2i _bigin = sellBigin(_sell, Vec2i(-_coll_han, -_coll_han));
+	Vec2i _end = sellEnd(_sell, Vec2i(+_coll_han, +_coll_han));
 
 	for (int y = _bigin.y(); y <= _end.y(); y++)
 	{
@@ -220,6 +235,7 @@ Vec2f Map::collision(Vec2f _pos, Vec2f _size, Vec2f _vec)
 
 void Map::breakBlock(Vec2f _pos)
 {
+
 	drawPoint(_pos.x(), _pos.y(), 10, Color::white);
 
 	Vec2i _sell = sell(_pos);
@@ -234,25 +250,50 @@ void Map::breakBlock(Vec2f _pos)
 			//壊せるか否か
 			if (block[y][x]->isBreak())
 			{
-				_block_pos = Vec2f(x * block_size.x(), -y*block_size.y());
-					if (block[y][x] == nullptr)
-						block[y][x] = std::make_shared<BlockBase>(BlockBase(_block_pos, block_size));
-				
+				//このブロックは消えるか否か？
+				if (block[y][x]->BreakClear())
+				{
+
+					_block_pos = Vec2f(x * block_size.x(), -y*block_size.y());
+					block[y][x] = std::make_shared<BlockBase>(BlockBase(_block_pos, block_size));
+				}
+				else
+				{
+					block[y][x]->Break();
+				}
 			}
 		}
 	}
+	for (auto& it : move_block)
+	{
+		//壊せるか否か
+		if (it->isBreak())
+		{
+			//このブロックは消えるか否か？
+			if (it->isHit(_pos,Vec2f(100,100)))
 
+				it->Break();
 
-
+		}
+	}
 }
 
 void Map::push(Vec2f _pos, Vec2f _size, Vec2f _vec)
 {
 	for (auto& it : move_block)
 	{
+
 		it->push(_pos, _size, _vec);
 	}
 
+}
+
+void Map::checkPoint(const Vec2f& _pos, const Vec2f& _size)
+{
+	Vec2f pos_ = _pos + Vec2f(0, -_size.y() / 2 + block_size.y() / 2);
+	Vec2i _sell = sell(pos_);
+	_sell = sellBigin(sellEnd(_sell, Vec2i(0, 0)), Vec2i(0, 0));
+	block[_sell.y()][_sell.x()]->checkPoint();
 }
 
 
