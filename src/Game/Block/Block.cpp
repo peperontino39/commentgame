@@ -23,10 +23,12 @@ bool BlockBase::isBreak()
 	return false;
 }
 
-void BlockBase::Break()
+bool BlockBase::isHit(Vec2f _pos, Vec2f _size)
 {
-	
+	return utl::Colli::rect_Rect(this->pos+size/2,size,_pos + _size/2,_size);
 }
+
+
 
 
 

@@ -3,7 +3,7 @@
 Dummy::Dummy(Vec2f _pos, Vec2f _size) :
 	BlockBase(_pos, _size)
 {
-
+	
 
 
 }
@@ -16,3 +16,4 @@ void Dummy::draw()
 		size.x(), size.y(), 0, 0, 128, 128,
 		Textures::get("dummy"));
 }
+

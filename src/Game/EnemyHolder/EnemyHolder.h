@@ -14,13 +14,15 @@ public:
 	~EnemyHolder();
 	void update();
 	void draw();
-	void playerGetFunction(Vec2f pos, Vec2f size);
+	void dead(Vec2f pos, Vec2f size,bool dead);
 	void load(int _stage_num);
-	std::list<std::shared_ptr<Enemy>> enemy_list();
+	Vec2f player_ride(Vec2f player_pos,Vec2f player_size,Vec2f player_vec);
+	void stan(Vec2f item_pos, Vec2f item_size);
+	bool player_dead(Vec2f pos, Vec2f size);
 	std::vector<std::function<void()>> function;
 	std::list<std::shared_ptr<Enemy>> enemy;
-	
+	std::list<std::shared_ptr<Enemy>> enemy_list();
 private:
-	bool dead_flag;
+	
 
 };

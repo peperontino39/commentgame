@@ -5,15 +5,12 @@ void Icon::update(bool select) {
 }
 void Icon::draw() {
 	Vec2f drawsize = Vec2f(size_.x()*scale_.x(), size_.y()*scale_.y());
-	drawTextureBox(pos_.x(), pos_.y(), drawsize.x(), drawsize.y(), 0, 0, image_.width(), image_.height(),
+	drawTextureBox(pos_.x(), pos_.y(), drawsize.x(), drawsize.y(), cutpos_.x(), cutpos_.y(),cutsize_.x(),cutsize_.y(),
 		image_, Color::white,0,Vec2f(1,1),drawsize/2);
-	
-	/*drawFillBox(pos_.x(), pos_.y(), drawsize.x(), drawsize.y(), Color::white,
-		0,Vec2f(1,1),drawsize/2);*/
 }
 void Icon::scaleChange(bool select) {
 	Vec2f nomalscale = Vec2f(1.f, 1.f);
-	Vec2f bigscale = Vec2f(1.1f, 1.1f);
+	Vec2f bigscale = Vec2f(1.05f, 1.05f);
 	scale_.x() = Easing::Function::BackInOut(t_, nomalscale.x(), bigscale.x());
 	scale_.y() = Easing::Function::BackInOut(t_, nomalscale.y(), bigscale.y());
 	float speed = 10.0f;

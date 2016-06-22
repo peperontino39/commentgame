@@ -1,22 +1,56 @@
 #include "Comment.h"
 #include "CommentTask/CommentTask.h"
+#include "CommnetStackList/CommentStackList.h"
+#include "CommentOption/CommentOption.h"
+#include "CommentWindow/CommentWindow.h"
+#include "CommentCardinalSystem/CommentCardinalSystem.h"
 
-Comment::Comment()
+Comment::Comment( )
 {
-    CommentTask::setup();
+    clear( );
+
+    setup( );
 }
 
-Comment::~Comment()
+Comment::~Comment( )
 {
-    CommentTask::clear();
+    clear( );
 }
 
-void Comment::update()
+void Comment::update( )
 {
-    CommentTask::update();
+    CommentTask::update( );
+
+    CommentCardinalSystem::update( );
+
+    CommentStackList::update( );
+
+    CommentOption::update( );
+
+    CommentWindow::update( );
 }
 
-void Comment::draw()
+void Comment::draw( )
 {
-    CommentTask::draw();
+    CommentTask::draw( );
+}
+
+void Comment::setup( )
+{
+    CommentTask::setup( );
+
+    CommentCardinalSystem::setup( );
+}
+
+void Comment::clear( )
+{
+    CommentTask::clear( );
+
+    CommentCardinalSystem::clear( );
+
+    CommentStackList::clear( );
+
+    CommentOption::clear( );
+
+    CommentWindow::clear( );
 }

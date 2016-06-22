@@ -6,16 +6,18 @@ GrowBombPlace::GrowBombPlace() :
 	respawn_time(0),
 	is_here_bomb(false)
 {
-	/*respawn_time = max_respawn_time;*/
+	Textures::set("GrowBombPlace", "res/Texture/Item/GrowBombPlace.png");
+	respawn_time = max_respawn_time;
 }
 
 GrowBombPlace::GrowBombPlace(Vec2f pos, Vec2f size) :
-	ItemBase(ItemID::GROWBOMBPLACE, pos, size, Vec2f::Zero()),
-	max_respawn_time(360),
+	ItemBase(ItemID::GROWBOMBPLACE, pos, size, Vec2f::Zero(), Vec2f::Zero(), Vec2f(128.0f, 64.0f)),
+	max_respawn_time(120),
 	respawn_time(0),
 	is_here_bomb(false)
 {
-	/*respawn_time = max_respawn_time;*/
+	Textures::set("GrowBombPlace", "res/Texture/Item/GrowBombPlace.png");
+	respawn_time = max_respawn_time;
 }
 
 GrowBombPlace::~GrowBombPlace() {
@@ -49,5 +51,14 @@ void GrowBombPlace::update() {
 
 void GrowBombPlace::draw() {
 
-
+	drawTextureBox(getPos().x() - getSize().x() / 2.0f,
+		getPos().y() - getSize().y() / 2.0f,
+		getSize().x(),
+		getSize().y(),
+		cut_pos.x(),
+		cut_pos.y(),
+		cut_size.x(),
+		cut_size.y(),
+		Textures::get("GrowBombPlace"),
+		Color(color.x(), color.y(), color.z()));
 }

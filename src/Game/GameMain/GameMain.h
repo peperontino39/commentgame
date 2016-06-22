@@ -9,6 +9,8 @@
 #include "../Item/ItemManager/ItemManager.h"
 #include "../Comment/Comment.h"
 #include "../Comment/CommentWindow/CommentWindow.h"
+#include "../Medias/Medias.h"
+
 
 class GameMain : public SceneBase
 {
@@ -21,12 +23,23 @@ public:
 	void shift() override;
 
 private:
-	
+	void enemycollision();
+	void itemcollision();
+
+
+	void bgload(int);
+
 	Map map;
 	Ui ui;
 	EnemyHolder enemyholder;
-	ItemManager itemmanager;
+	//ItemManager itemmanager;
+
+
 	Comment comment;
 
 	Vec2f camera_pos;
+
+
+	Texture bg;
+	Media bgm;
 };
