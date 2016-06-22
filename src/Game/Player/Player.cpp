@@ -100,11 +100,37 @@ void Player::move()
 	}
 }
 
-void Player::itemThrowMotion()
+void Player::itemAction()
 {
-	if (is_have == true)
+	if (canCharaInput())
 	{
-		//sizeChange();
+		vec_.x() = 0;
+		if (is_have == false)
+		{
+			is_pick_up = true;
+			is_throw = false;
+		}
+		else
+		{
+			is_throw = true;
+			is_have = false;
+		}
+	}
+}
+
+
+void Player::bowAction()
+{
+	if (canCharaInput())
+	{
+		vec_.x() = 0;
+		if (is_bow_have == false)
+			is_bow_have = true;
+		else
+		{
+			is_bow_shot = true;
+			is_bow_have = false;
+		}
 	}
 }
 
@@ -190,7 +216,7 @@ void Player::charastateUpdate()
 	if (is_stageclear)
 		charastate = CLEAR;
 
-#if 1
+#if 0
 	// 死亡仮置き
 	if (canCharaInput())
 	{
@@ -200,6 +226,24 @@ void Player::charastateUpdate()
 			is_dead_ = !is_dead_;
 		}
 	}
+
+
+
+	// ステージクリア仮置き
+	if (canCharaInput())
+	{
+		if (env.isPushKey('C'))
+		{
+			is_stageclear = !is_stageclear;
+		}
+	}
+
+
+
+
+
+
+#endif
 
 	// 拾って投げる仮置き
 	if (canCharaInput())
@@ -219,20 +263,6 @@ void Player::charastateUpdate()
 			}
 		}
 
-
-		if (env.isPushKey('I'))
-		{
-			if (is_have == false)
-			{
-				is_pick_up = true;
-				is_throw = false;
-			}
-			else
-			{
-				is_throw = true;
-				is_have = false;
-			}
-		}
 	}
 
 	if (is_pick_up == true)
@@ -240,44 +270,19 @@ void Player::charastateUpdate()
 	if (is_throw == true)
 		item_count++;
 
-	// ステージクリア仮置き
-	if (canCharaInput())
+
+	if (item_count > 10)
 	{
-		if (env.isPushKey('C'))
+		if (is_bow_shot == true)
 		{
-			is_stageclear = !is_stageclear;
+			is_bow_shot = false;
+			item_count = 0;
 		}
 	}
-
-	if (canCharaInput())
-	{
-		if (item_count > 10)
-		{
-			if (is_bow_shot == true)
-			{
-				is_bow_shot = false;
-				item_count = 0;
-			}
-		}
-
-		if (env.isPushKey('B'))
-		{
-			if (is_bow_have == false)
-				is_bow_have = true;
-			else
-			{
-				is_bow_shot = true;
-				is_bow_have = false;
-			}
-		}
-	}
-
-
 	if (is_bow_shot)
 		item_count++;
-
-#endif
 }
+
 
 int Player::getAnimationTime(const std::string name_)
 {
@@ -321,7 +326,6 @@ void Player::animationSetup()
 void Player::animationUpdate()
 {
 	deadMotion();
-	itemThrowMotion();
 	animationChange();
 	updateChara();
 }
