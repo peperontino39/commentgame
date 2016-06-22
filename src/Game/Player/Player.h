@@ -40,27 +40,43 @@ private: // キャラの状態変更
 	void charastateUpdate();
 
 	void move();
+public:
+	bool IsGetItem() {
+		if (is_pick_up || is_have)
+			return true;
+		return false;
+	}
+
+	void itemAction();
+
 private: // 物
 	bool is_pick_up = false;
 	bool is_have = false;
 	bool is_throw = false;
-	void itemThrowMotion();
 	int item_count = 0;
 
 public: // ステージクリア
 	bool getStageClear() { return is_stageclear; }
+	bool setStageClear(const bool& is_stageclear_) { is_stageclear = is_stageclear_; }
 private:
 	bool is_stageclear = false;
 
 public: // 弓
 	bool getIsBowHave() { return is_bow_have; }
+	void setIsBowHave(const bool& is_bow_have_) { is_bow_have = is_bow_have_; }
 	bool getIsBowShot() { return is_bow_shot; }
+	void setIsBowShot(const bool& is_bow_shot_) { is_bow_shot = is_bow_shot_; }
+
+	void bowAction();
 
 private:
 
 	bool is_bow_have = false;
 	bool is_bow_shot = false;
 
+public:
+
+	bool setIsDead(const bool& is_dead) { is_dead_ = is_dead; }
 private: // 死亡
 	bool is_dead_ = false;
 	void dead();
