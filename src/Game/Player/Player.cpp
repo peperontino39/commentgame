@@ -205,6 +205,8 @@ void Player::charastateUpdate()
 		charastate = BOMB_PICK_UP;
 	if (is_have)
 		charastate = BOMB_HAVE;
+	if (is_have && vec_.x() != 0)
+		charastate = BOMB_HAVE_MOVE;
 	if (is_throw)
 		charastate = BOMB_THROW;
 	if (is_bow_have)
@@ -212,10 +214,10 @@ void Player::charastateUpdate()
 	if (is_bow_shot)
 		charastate = BOW_SHOT;
 	if (is_dead_)
-		charastate = DEAD;
+		charastate = DEAD_START;
 	if (is_stageclear)
 		charastate = CLEAR;
-
+	std::cout << charastate << std::endl;
 #if 0
 	// Ž€–S‰¼’u‚«
 	if (canCharaInput())
@@ -239,10 +241,6 @@ void Player::charastateUpdate()
 	}
 
 
-
-
-
-
 #endif
 
 	// E‚Á‚Ä“Š‚°‚é‰¼’u‚«
@@ -255,11 +253,13 @@ void Player::charastateUpdate()
 				is_pick_up = false;
 				is_have = true;
 				item_count = 0;
+				vec_.x() = 0;
 			}
 			if (is_throw == true)
 			{
 				is_throw = false;
 				item_count = 0;
+				vec_.x() = 0;
 			}
 		}
 
@@ -270,17 +270,30 @@ void Player::charastateUpdate()
 	if (is_throw == true)
 		item_count++;
 
-
-	if (item_count > 10)
+	if (canCharaInput())
 	{
-		if (is_bow_shot == true)
+		if (item_count > 10)
 		{
-			is_bow_shot = false;
-			item_count = 0;
+			if (is_bow_shot == true)
+			{
+				is_bow_shot = false;
+				item_count = 0;
+				vec_.x() = 0;
+			}
 		}
 	}
 	if (is_bow_shot)
 		item_count++;
+
+
+	/*if (env.isPushKey('I'))
+	{
+		itemAction();
+	}
+	if (env.isPushKey('B'))
+	{
+		bowAction();
+	}*/
 }
 
 
